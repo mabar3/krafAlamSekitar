@@ -1,0 +1,3021 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Bengkel Kraf Mesra Alam 🌱</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --mint: #b8f2e6;
+      --mint-dark: #4ecdc4;
+      --turquoise: #7bdff2;
+      --sky: #b2f7ef;
+      --yellow: #ffe66d;
+      --yellow-dark: #f4a261;
+      --peach: #ffd6a5;
+      --pink: #ffadad;
+      --pink-dark: #ff758f;
+      --lavender: #cdb4db;
+      --lavender-dark: #9d4edd;
+      --cream: #fffdf7;
+      --brown: #5c4033;
+      --wood: #e6ccb2;
+      --wood-dark: #ddb892;
+      --shadow-soft: 0 8px 20px rgba(92, 64, 51, 0.14);
+      --shadow-btn: 0 5px 0 rgba(92, 64, 51, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100vw;
+      height: 100%;
+      min-height: 100dvh;
+      overflow: hidden;
+      background: linear-gradient(180deg, #e0fbfc 0%, #fff8eb 68%, #f3d5b5 68%, #e6ccb2 100%);
+      font-family: 'Nunito', sans-serif;
+      color: var(--brown);
+    }
+
+    /* Full-Viewport Responsive Game Container (Jotform / Laptop / Tablet / Phone) */
+    #app-frame {
+      position: relative;
+      width: 100%;
+      max-width: 100vw;
+      height: 100dvh;
+      min-height: 100dvh;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(180deg, #e0fbfc 0%, #fff8eb 68%, #f3d5b5 68%, #e6ccb2 100%);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: 0;
+      border: none;
+    }
+
+    /* Workshop Background Decor */
+    .bg-decor {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* Top Bar */
+    #top-bar {
+      position: relative;
+      z-index: 20;
+      width: 100%;
+      padding: clamp(8px, 1.5vh, 14px) clamp(12px, 2.5vw, 28px) clamp(8px, 1.2vh, 12px);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 3px solid #bde0fe;
+      border-radius: 0 0 22px 22px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .game-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(15px, 2.4vw, 22px);
+      font-weight: 700;
+      color: #2b9348;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .icon-btn-group {
+      display: flex;
+      align-items: center;
+      gap: clamp(5px, 1vw, 10px);
+      flex-shrink: 0;
+    }
+
+    .mini-btn {
+      border: none;
+      border-radius: 12px;
+      padding: clamp(6px, 1vh, 9px) clamp(9px, 1.6vw, 15px);
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(11px, 1.5vw, 14px);
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      box-shadow: 0 3px 0 rgba(0, 0, 0, 0.16);
+      transition: transform 0.12s ease, filter 0.15s ease;
+    }
+
+    .mini-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.16);
+    }
+
+    .btn-home { background: #ffd166; color: #5c4033; }
+    .btn-hint { background: #a0c4ff; color: #1d3557; }
+    .btn-reset { background: #ffadad; color: #5c1a1b; }
+    .btn-audio { background: #b8f2e6; color: #1b4332; font-size: clamp(13px, 1.8vw, 16px); padding: clamp(5px, 0.9vh, 8px) clamp(8px, 1.4vw, 13px); }
+
+    /* Progress Bar & Stars */
+    #progress-wrap {
+      margin-top: clamp(6px, 1vh, 10px);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: clamp(12px, 1.8vh, 16px);
+      background: #e9ecef;
+      border-radius: 99px;
+      overflow: hidden;
+      border: 2px solid #ced4da;
+      position: relative;
+    }
+
+    #progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #52b788, #ffd166);
+      border-radius: 99px;
+      transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .star-counter {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(13px, 1.8vw, 16px);
+      font-weight: 700;
+      background: #fff3b0;
+      border: 2px solid #f4a261;
+      padding: 3px 11px;
+      border-radius: 99px;
+      color: #7f4f24;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    /* Middle Stage */
+    #middle-stage {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: clamp(8px, 1.4vh, 14px) clamp(12px, 3vw, 32px) clamp(6px, 1vh, 12px);
+      overflow: hidden;
+    }
+
+    /* Mascot Bubble */
+    #mascot-banner {
+      width: 100%;
+      max-width: 960px;
+      display: flex;
+      align-items: center;
+      gap: clamp(8px, 1.5vw, 14px);
+      background: rgba(255, 255, 255, 0.94);
+      border: 3px solid #95d5b2;
+      border-radius: 18px;
+      padding: clamp(7px, 1.2vh, 12px) clamp(11px, 2vw, 18px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+      z-index: 15;
+      flex-shrink: 0;
+    }
+
+    #mascot-avatar {
+      width: clamp(42px, 6vw, 54px);
+      height: clamp(42px, 6vw, 54px);
+      flex-shrink: 0;
+      animation: floatBob 2.6s ease-in-out infinite;
+    }
+
+    #mascot-text {
+      font-size: clamp(12.5px, 1.8vw, 16px);
+      line-height: 1.35;
+      font-weight: 700;
+      color: #2d3a3a;
+      margin: 0;
+    }
+
+    /* Main Interactive Canvas/SVG Area */
+    #craft-arena {
+      position: relative;
+      width: 100%;
+      max-width: 960px;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+      padding: 4px 0;
+    }
+
+    #craft-arena > svg {
+      width: auto;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    /* Homepage 4 Doors Grid */
+    #home-grid {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: clamp(10px, 2vw, 20px);
+      padding: clamp(4px, 1vh, 10px) 0;
+    }
+
+    .door-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      border-radius: 24px 24px 14px 14px;
+      padding: clamp(8px, 1.4vh, 14px) clamp(8px, 1.5vw, 14px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      border: 4px solid #ffffff;
+      box-shadow: 0 8px 18px rgba(92, 64, 51, 0.16);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: hidden;
+      perspective: 600px;
+    }
+
+    .door-card:hover, .door-card:active {
+      transform: scale(1.02) translateY(-2px);
+    }
+
+    .door-1 { background: linear-gradient(180deg, #9bf6ff 0%, #48cae4 100%); }
+    .door-2 { background: linear-gradient(180deg, #ffd6a5 0%, #f4a261 100%); }
+    .door-3 { background: linear-gradient(180deg, #ffadad 0%, #ff758f 100%); }
+    .door-4 { background: linear-gradient(180deg, #bdb2ff 0%, #9d4edd 100%); }
+
+    .door-leaf {
+      position: absolute;
+      inset: 0;
+      border-radius: 20px 20px 10px 10px;
+      background: inherit;
+      transform-origin: left center;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: clamp(8px, 1.4vh, 14px) clamp(8px, 1.4vw, 14px);
+    }
+
+    .door-card.opening .door-leaf {
+      transform: rotateY(-105deg);
+    }
+
+    .door-interior {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, #fff3b0 0%, #ffd166 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: clamp(16px, 2.5vw, 24px);
+      color: #7f4f24;
+      z-index: 1;
+    }
+
+    .door-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #2b9348;
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(10px, 1.3vw, 12px);
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 99px;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      z-index: 5;
+    }
+
+    .door-num {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 3px 12px;
+      border-radius: 99px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(11px, 1.5vw, 14px);
+      font-weight: 700;
+      color: #333;
+      flex-shrink: 0;
+    }
+
+    .door-visual {
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 0;
+    }
+
+    .door-visual svg {
+      width: auto;
+      height: 100%;
+      max-width: 92%;
+      max-height: clamp(78px, 16vh, 150px);
+    }
+
+    .door-label {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 12px;
+      padding: clamp(5px, 1vh, 9px) 8px;
+      text-align: center;
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(11.5px, 1.6vw, 15px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: #3d2c2e;
+      flex-shrink: 0;
+    }
+
+    /* Bottom Dock */
+    #bottom-dock {
+      position: relative;
+      z-index: 20;
+      width: 100%;
+      min-height: clamp(118px, 18vh, 165px);
+      background: rgba(255, 255, 255, 0.95);
+      border-top: 4px solid #ffd166;
+      border-radius: 24px 24px 0 0;
+      padding: clamp(8px, 1.4vh, 14px) clamp(12px, 3vw, 32px) clamp(10px, 1.6vh, 16px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(6px, 1vh, 10px);
+      box-shadow: 0 -6px 18px rgba(92, 64, 51, 0.1);
+      flex-shrink: 0;
+    }
+
+    #instruction-pill {
+      background: #fff3b0;
+      border: 2px dashed #f4a261;
+      color: #6f4518;
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(13px, 1.8vw, 16px);
+      font-weight: 600;
+      padding: clamp(5px, 0.9vh, 8px) 16px;
+      border-radius: 99px;
+      text-align: center;
+      width: 100%;
+      max-width: 960px;
+    }
+
+    #dock-controls {
+      width: 100%;
+      max-width: 960px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(6px, 1.2vw, 12px);
+    }
+
+    /* Big Cartoon Action Buttons */
+    .action-btn {
+      border: 3px solid #ffffff;
+      border-radius: 18px;
+      padding: clamp(10px, 1.4vh, 14px) clamp(20px, 3vw, 30px);
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(15px, 2vw, 18px);
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--shadow-btn);
+      transition: transform 0.12s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .action-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 rgba(92, 64, 51, 0.25);
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #52b788 0%, #2d6a4f 100%);
+      color: #ffffff;
+    }
+
+    .btn-secondary {
+      background: linear-gradient(180deg, #ffd166 0%, #f4a261 100%);
+      color: #4a2c11;
+    }
+
+    /* Palette & Swatches */
+    .palette-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: clamp(6px, 1.2vw, 12px);
+      width: 100%;
+      padding: 2px 0;
+    }
+
+    .swatch-btn {
+      width: clamp(32px, 4.5vw, 40px);
+      height: clamp(32px, 4.5vw, 40px);
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.15s;
+    }
+
+    .swatch-btn.active {
+      transform: scale(1.16);
+      border-color: #2b9348;
+    }
+
+    .pattern-btn {
+      padding: clamp(5px, 0.8vh, 8px) clamp(10px, 1.6vw, 16px);
+      border-radius: 12px;
+      border: 2px solid #cbd5e1;
+      background: #f8fafc;
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(11.5px, 1.5vw, 14px);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .pattern-btn.active {
+      background: #ffd166;
+      border-color: #f4a261;
+    }
+
+    /* Draggable Items in Dock or Stage */
+    .drag-token {
+      touch-action: none;
+      cursor: grab;
+      transition: transform 0.15s ease;
+    }
+
+    .drag-token:active {
+      cursor: grabbing;
+    }
+
+    .sticker-chip {
+      width: clamp(40px, 5.5vw, 48px);
+      height: clamp(40px, 5.5vw, 48px);
+      background: #f1faee;
+      border: 2px solid #a8dadc;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(20px, 2.8vw, 25px);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      touch-action: none;
+      cursor: grab;
+    }
+
+    /* Flower Selection Cards */
+    .flower-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(6px, 1.5vw, 14px);
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .flower-card {
+      background: #fff;
+      border: 3px solid #bde0fe;
+      border-radius: 14px;
+      padding: clamp(5px, 1vh, 9px) 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+
+    .flower-card:hover, .flower-card.selected {
+      transform: translateY(-2px);
+      border-color: #2b9348;
+      background: #e9f5db;
+    }
+
+    .flower-card span {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(10px, 1.4vw, 13px);
+      font-weight: 700;
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    /* Animations: Slow Blinking / Flicker Petunjuk */
+    @keyframes slowBlink {
+      0%, 100% { opacity: 1; filter: drop-shadow(0 0 6px rgba(255, 214, 10, 0.95)); }
+      50% { opacity: 0.35; filter: drop-shadow(0 0 1px rgba(255, 214, 10, 0.2)); }
+    }
+
+    @keyframes pulseTarget {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes floatBob {
+      0%, 100% { transform: translateY(0px) rotate(-2deg); }
+      50% { transform: translateY(-4px) rotate(2deg); }
+    }
+
+    @keyframes swayGentle {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+    }
+
+    @keyframes arrowBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    .blink-guide {
+      animation: slowBlink 1.5s ease-in-out infinite;
+    }
+
+    .pulse-guide {
+      animation: pulseTarget 1.4s ease-in-out infinite;
+    }
+
+    .sway-plant {
+      transform-origin: bottom center;
+      animation: swayGentle 3s ease-in-out infinite;
+    }
+
+    /* Floating Drag Clone */
+    #drag-proxy {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%) scale(1.15);
+      display: none;
+    }
+
+    /* Toast Feedback */
+    #toast-msg {
+      position: absolute;
+      top: 118px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.8);
+      background: #2b9348;
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 99px;
+      border: 2px solid #fff;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.18);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 50;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      white-space: nowrap;
+    }
+
+    #toast-msg.show {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<div id="app-frame">
+  <!-- Decorative Workshop Shelf & Leaves Background -->
+  <svg class="bg-decor" viewBox="0 0 360 640" preserveAspectRatio="none">
+    <!-- Wall Stripes -->
+    <rect width="360" height="435" fill="#e0fbfc" />
+    <rect x="0" y="0" width="360" height="435" fill="url(#wallDots)" opacity="0.45" />
+    <!-- Window -->
+    <rect x="24" y="92" width="84" height="96" rx="14" fill="#caf0f8" stroke="#ffffff" stroke-width="5" />
+    <line x1="66" y1="92" x2="66" y2="188" stroke="#ffffff" stroke-width="4" />
+    <line x1="24" y1="140" x2="108" y2="140" stroke="#ffffff" stroke-width="4" />
+    <circle cx="82" cy="115" r="11" fill="#ffe66d" />
+    <!-- Wall Shelf -->
+    <rect x="225" y="128" width="112" height="10" rx="5" fill="#d4a373" />
+    <rect x="240" y="102" width="18" height="26" rx="4" fill="#ffadad" />
+    <rect x="263" y="108" width="16" height="20" rx="4" fill="#bdb2ff" />
+    <circle cx="305" cy="116" r="12" fill="#95d5b2" />
+    <path d="M305 104 Q312 92 318 102 Q309 107 305 104" fill="#40916c" />
+    <!-- Craft Table -->
+    <rect x="0" y="430" width="360" height="210" fill="#e6ccb2" />
+    <rect x="0" y="430" width="360" height="14" fill="#ddb892" />
+    <ellipse cx="180" cy="488" rx="135" ry="26" fill="#d5bdaf" opacity="0.55" />
+    <defs>
+      <pattern id="wallDots" width="24" height="24" patternUnits="userSpaceOnUse">
+        <circle cx="6" cy="6" r="2" fill="#90e0ef" />
+        <circle cx="18" cy="18" r="2" fill="#ffd6a5" />
+      </pattern>
+    </defs>
+  </svg>
+
+  <!-- TOP BAR -->
+  <header id="top-bar">
+    <div class="top-row">
+      <div class="game-title" id="header-title">🌱 BENGKEL KRAF MESRA ALAM</div>
+      <div class="icon-btn-group">
+        <button class="mini-btn btn-audio" id="btn-audio" title="Muzik & Bunyi">🔊</button>
+        <button class="mini-btn btn-hint hidden" id="btn-hint" title="Petunjuk">💡 Hint</button>
+        <button class="mini-btn btn-reset hidden" id="btn-reset" title="Ulang Langkah">🔄 Reset</button>
+        <button class="mini-btn btn-home hidden" id="btn-home" title="Kembali ke Bengkel">🏠 Bengkel</button>
+      </div>
+    </div>
+    <div id="progress-wrap">
+      <div class="progress-track">
+        <div id="progress-fill"></div>
+      </div>
+      <div class="star-counter">⭐ <span id="star-count">0</span></div>
+    </div>
+  </header>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast-msg">Bagus!</div>
+
+  <!-- MIDDLE STAGE -->
+  <main id="middle-stage">
+    <!-- Mascot Cik Daun -->
+    <div id="mascot-banner">
+      <svg id="mascot-avatar" viewBox="0 0 64 64">
+        <path d="M32 6 C50 10, 58 28, 52 46 C46 58, 22 60, 14 48 C6 34, 14 12, 32 6 Z" fill="#52b788" stroke="#2d6a4f" stroke-width="3"/>
+        <path d="M32 14 Q30 36 22 56" fill="none" stroke="#95d5b2" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="25" cy="31" r="3.2" fill="#1b4332"/>
+        <circle cx="40" cy="31" r="3.2" fill="#1b4332"/>
+        <circle cx="26" cy="30" r="1" fill="#fff"/>
+        <circle cx="41" cy="30" r="1" fill="#fff"/>
+        <ellipse cx="20" cy="36" rx="3.5" ry="2" fill="#ff8fa3" opacity="0.8"/>
+        <ellipse cx="45" cy="36" rx="3.5" ry="2" fill="#ff8fa3" opacity="0.8"/>
+        <path d="M28 38 Q32.5 43 37 38" fill="none" stroke="#1b4332" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M32 6 Q36 1 42 4" fill="none" stroke="#2d6a4f" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <p id="mascot-text">Selamat datang ke Bengkel Kraf Mesra Alam! Jom ubah bahan terpakai menjadi sesuatu yang baharu. Pilih pintu yang kamu suka!</p>
+    </div>
+
+    <!-- Interactive Area -->
+    <div id="craft-arena"></div>
+  </main>
+
+  <!-- BOTTOM DOCK -->
+  <footer id="bottom-dock">
+    <div id="instruction-pill">Pilih mana-mana pintu bengkel di atas untuk bermula!</div>
+    <div id="dock-controls"></div>
+  </footer>
+</div>
+
+<!-- Drag Proxy for Touch & Mouse -->
+<div id="drag-proxy"></div>
+
+<script>
+/* ==========================================================================
+   1. WEB AUDIO API — LAGU LATAR BELAKANG CERIA & SOUND EFFECTS (SFX)
+   ========================================================================== */
+class SoundEngine {
+  constructor() {
+    this.ctx = null;
+    this.muted = false;
+    this.bgmTimer = null;
+    this.noteIdx = 0;
+    this.isPlayingBgm = false;
+    // Melodi marimba/bell pastel ceria (C Major Pentatonic / Playful)
+    this.melody = [
+      523.25, 659.25, 783.99, 659.25, 880.00, 783.99, 659.25, 523.25,
+      587.33, 698.46, 880.00, 698.46, 783.99, 659.25, 587.33, 0,
+      523.25, 659.25, 783.99, 1046.50, 880.00, 783.99, 659.25, 587.33,
+      659.25, 587.33, 523.25, 392.00, 523.25, 0, 523.25, 0
+    ];
+  }
+
+  init() {
+    if (!this.ctx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      this.ctx = new AudioCtx();
+    }
+    if (this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+    if (!this.isPlayingBgm) {
+      this.startBgm();
+    }
+  }
+
+  startBgm() {
+    this.isPlayingBgm = true;
+    const playBeat = () => {
+      if (!this.isPlayingBgm) return;
+      if (!this.muted && this.ctx && this.ctx.state === 'running') {
+        const freq = this.melody[this.noteIdx % this.melody.length];
+        if (freq > 0) {
+          this.playTone(freq, 'sine', 0.24, 0.045);
+          if (this.noteIdx % 4 === 0) {
+            this.playTone(freq / 2, 'triangle', 0.3, 0.03);
+          }
+        }
+        this.noteIdx++;
+      }
+      this.bgmTimer = setTimeout(playBeat, 340);
+    };
+    playBeat();
+  }
+
+  toggleMute() {
+    this.init();
+    this.muted = !this.muted;
+    return this.muted;
+  }
+
+  playTone(freq, type = 'sine', duration = 0.2, gainVal = 0.12, delay = 0) {
+    if (this.muted) return;
+    this.init();
+    const now = this.ctx.currentTime + delay;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, now);
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.exponentialRampToValueAtTime(gainVal, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + duration + 0.02);
+  }
+
+  playClick() {
+    this.playTone(660, 'sine', 0.1, 0.14);
+    this.playTone(880, 'sine', 0.12, 0.1, 0.04);
+  }
+
+  playSnip() {
+    this.playTone(1200, 'sawtooth', 0.07, 0.08);
+    this.playTone(900, 'triangle', 0.09, 0.1, 0.05);
+  }
+
+  playPop() {
+    this.playTone(420, 'sine', 0.08, 0.15);
+    this.playTone(720, 'sine', 0.12, 0.14, 0.05);
+  }
+
+  playSoil() {
+    this.playTone(160, 'triangle', 0.12, 0.12);
+    this.playTone(210, 'sine', 0.1, 0.08, 0.04);
+  }
+
+  playWater() {
+    const f = 550 + Math.random() * 350;
+    this.playTone(f, 'sine', 0.14, 0.09);
+  }
+
+  playBloom() {
+    const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+    notes.forEach((n, i) => this.playTone(n, 'sine', 0.35, 0.12, i * 0.09));
+  }
+
+  playFanfare() {
+    const notes = [523.25, 659.25, 783.99, 1046.50, 783.99, 1046.50];
+    const times = [0, 0.12, 0.24, 0.38, 0.54, 0.68];
+    notes.forEach((n, i) => this.playTone(n, 'triangle', 0.32, 0.16, times[i]));
+  }
+}
+
+const sfx = new SoundEngine();
+
+/* ==========================================================================
+   2. GLOBAL GAME STATE
+   ========================================================================== */
+const state = {
+  currentDoor: null, // null = homepage, 1..4
+  step: 1,
+  stars: 0,
+  completedDoors: { 1: false, 2: false, 3: false, 4: false },
+  hintActive: false,
+
+  // Door 1 State (Botol -> Pasu)
+  d1: {
+    cutDone: false,
+    color: '#7bdff2',
+    pattern: 'none',
+    stickers: [], // {emoji, x, y}
+    soilLevel: 0, // 0 to 100
+    selectedFlower: 'sunflower', // sunflower, tulip, daisy, rose
+    seedPlanted: false,
+    waterLevel: 0, // 0 to 100
+    growthPhase: 0 // 0..5
+  },
+
+  // Door 2 State (Tin -> Bekas Alat Tulis)
+  d2: {
+    cutDone: false,
+    color: '#ffd166',
+    pattern: 'stripes',
+    stickers: [],
+    placedItems: [] // 'pencil', 'pen', 'ruler', 'eraser'
+  },
+
+  // Door 3 State (Kotak Kadbod -> Organizer Meja)
+  d3: {
+    cutDone: false,
+    dividersPlaced: 0, // 0..2
+    color: '#ffadad',
+    pattern: 'dots',
+    stickers: [],
+    placedItems: [] // 'book', 'pencil', 'scissors', 'eraser'
+  },
+
+  // Door 4 State (Kertas -> Bunga Hiasan)
+  d4: {
+    paperColor: '#ff758f',
+    petalsCut: 0, // 0..5
+    petalsAssembled: 0, // 0..5
+    centerPlaced: false,
+    stemPlaced: false,
+    leafPlaced: false,
+    centerColor: '#ffe66d',
+    stickers: []
+  }
+};
+
+/* DOM References */
+const arena = document.getElementById('craft-arena');
+const mascotText = document.getElementById('mascot-text');
+const instructionPill = document.getElementById('instruction-pill');
+const dockControls = document.getElementById('dock-controls');
+const headerTitle = document.getElementById('header-title');
+const progressFill = document.getElementById('progress-fill');
+const starCountEl = document.getElementById('star-count');
+const btnHome = document.getElementById('btn-home');
+const btnHint = document.getElementById('btn-hint');
+const btnReset = document.getElementById('btn-reset');
+const btnAudio = document.getElementById('btn-audio');
+const toastMsg = document.getElementById('toast-msg');
+const dragProxy = document.getElementById('drag-proxy');
+
+/* Helper Functions */
+function showToast(msg) {
+  toastMsg.textContent = msg;
+  toastMsg.classList.add('show');
+  clearTimeout(toastMsg._t);
+  toastMsg._t = setTimeout(() => toastMsg.classList.remove('show'), 2200);
+}
+
+function addStars(n = 1) {
+  state.stars += n;
+  starCountEl.textContent = state.stars;
+}
+
+function setProgress(pct) {
+  progressFill.style.width = `${Math.min(100, Math.max(0, pct))}%`;
+}
+
+function setMascot(text) {
+  mascotText.textContent = text;
+}
+
+function setInstruction(text) {
+  instructionPill.textContent = text;
+}
+
+/* Audio Button */
+btnAudio.addEventListener('click', () => {
+  const muted = sfx.toggleMute();
+  btnAudio.textContent = muted ? '🔇' : '🔊';
+  if (!muted) sfx.playClick();
+});
+
+/* Top Bar Navigation Buttons */
+btnHome.addEventListener('click', () => {
+  sfx.playClick();
+  goHome();
+});
+
+btnHint.addEventListener('click', () => {
+  sfx.playClick();
+  state.hintActive = true;
+  showToast('💡 Ikuti bahagian yang berkelip!');
+  renderCurrentScreen();
+});
+
+btnReset.addEventListener('click', () => {
+  sfx.playClick();
+  resetCurrentStep();
+  showToast('🔄 Langkah diulang!');
+});
+
+/* ==========================================================================
+   3. UNIVERSAL POINTER DRAG-AND-DROP ENGINE (TOUCH & MOUSE)
+   ========================================================================== */
+function makeDraggable({ element, payload, renderGhostHTML, onDropCheck, onDragMove, onDragEnd }) {
+  let dragging = false;
+
+  const onPointerDown = (e) => {
+    e.preventDefault();
+    sfx.init();
+    dragging = true;
+    element.setPointerCapture(e.pointerId);
+    element.style.opacity = '0.45';
+
+    dragProxy.innerHTML = renderGhostHTML ? renderGhostHTML(payload) : element.outerHTML;
+    dragProxy.style.display = 'block';
+    dragProxy.style.left = `${e.clientX}px`;
+    dragProxy.style.top = `${e.clientY}px`;
+  };
+
+  const onPointerMove = (e) => {
+    if (!dragging) return;
+    e.preventDefault();
+    dragProxy.style.left = `${e.clientX}px`;
+    dragProxy.style.top = `${e.clientY}px`;
+    if (onDragMove) onDragMove(e.clientX, e.clientY, payload);
+  };
+
+  const onPointerUp = (e) => {
+    if (!dragging) return;
+    dragging = false;
+    element.style.opacity = '1';
+    dragProxy.style.display = 'none';
+    if (onDragEnd) onDragEnd();
+
+    if (onDropCheck) {
+      const success = onDropCheck(e.clientX, e.clientY, payload);
+      if (!success) {
+        sfx.playTone(250, 'sine', 0.12, 0.08);
+      }
+    }
+  };
+
+  element.addEventListener('pointerdown', onPointerDown);
+  element.addEventListener('pointermove', onPointerMove);
+  element.addEventListener('pointerup', onPointerUp);
+  element.addEventListener('pointercancel', onPointerUp);
+}
+
+function isInsideRect(x, y, el, pad = 16) {
+  if (!el) return false;
+  const r = el.getBoundingClientRect();
+  return x >= r.left - pad && x <= r.right + pad && y >= r.top - pad && y <= r.bottom + pad;
+}
+
+/* ==========================================================================
+   4. SVG GENERATORS (CUTE CARTOON ASSETS & PATTERNS)
+   ========================================================================== */
+function getSvgDefs() {
+  return `
+    <defs>
+      <pattern id="pat-dots" width="18" height="18" patternUnits="userSpaceOnUse">
+        <circle cx="5" cy="5" r="3" fill="#ffffff" opacity="0.65"/>
+        <circle cx="14" cy="14" r="3" fill="#ffffff" opacity="0.65"/>
+      </pattern>
+      <pattern id="pat-stripes" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="7" height="16" fill="#ffffff" opacity="0.5"/>
+      </pattern>
+      <pattern id="pat-waves" width="24" height="14" patternUnits="userSpaceOnUse">
+        <path d="M0 7 Q6 1 12 7 T24 7" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.65"/>
+      </pattern>
+      <linearGradient id="plasticShine" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+        <stop offset="30%" stop-color="#ffffff" stop-opacity="0.1"/>
+        <stop offset="85%" stop-color="#000000" stop-opacity="0.08"/>
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0.35"/>
+      </linearGradient>
+      <linearGradient id="metalGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#dee2e6"/>
+        <stop offset="35%" stop-color="#f8f9fa"/>
+        <stop offset="75%" stop-color="#adb5bd"/>
+        <stop offset="100%" stop-color="#ced4da"/>
+      </linearGradient>
+    </defs>
+  `;
+}
+
+function getPatternOverlay(pat) {
+  if (pat === 'dots') return 'url(#pat-dots)';
+  if (pat === 'stripes') return 'url(#pat-stripes)';
+  if (pat === 'waves') return 'url(#pat-waves)';
+  return 'none';
+}
+
+function renderFlowerHeadSVG(type, cx, cy, scale = 1, centerCol = '#ffe66d') {
+  if (type === 'sunflower') {
+    let petals = '';
+    for (let i = 0; i < 12; i++) {
+      const ang = i * 30;
+      petals += `<ellipse cx="0" cy="-22" rx="6" ry="13" fill="#ffb703" stroke="#fb8500" stroke-width="1.5" transform="rotate(${ang})"/>`;
+    }
+    return `
+      <g transform="translate(${cx},${cy}) scale(${scale})">
+        ${petals}
+        <circle cx="0" cy="0" r="13" fill="#6f4518" stroke="#432818" stroke-width="2"/>
+        <circle cx="-4" cy="-3" r="1.5" fill="#bb9457"/>
+        <circle cx="4" cy="-2" r="1.5" fill="#bb9457"/>
+        <circle cx="0" cy="4" r="1.5" fill="#bb9457"/>
+      </g>`;
+  }
+  if (type === 'tulip') {
+    return `
+      <g transform="translate(${cx},${cy}) scale(${scale})">
+        <path d="M-16 -6 C-18 -24, -6 -28, 0 -14 C6 -28, 18 -24, 16 -6 C16 10, 8 16, 0 16 C-8 16, -16 10, -16 -6 Z" fill="#ff4d6d" stroke="#c9184a" stroke-width="2"/>
+        <path d="M-7 -8 C-5 -24, 5 -24, 7 -8 C7 8, 3 15, 0 15 C-3 15, -7 8, -7 -8 Z" fill="#ff758f"/>
+      </g>`;
+  }
+  if (type === 'daisy') {
+    let petals = '';
+    for (let i = 0; i < 10; i++) {
+      petals += `<ellipse cx="0" cy="-19" rx="5.5" ry="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" transform="rotate(${i * 36})"/>`;
+    }
+    return `
+      <g transform="translate(${cx},${cy}) scale(${scale})">
+        ${petals}
+        <circle cx="0" cy="0" r="10" fill="#ffd166" stroke="#f4a261" stroke-width="2"/>
+      </g>`;
+  }
+  // Rose
+  return `
+    <g transform="translate(${cx},${cy}) scale(${scale})">
+      <circle cx="0" cy="0" r="19" fill="#e63946" stroke="#9b2226" stroke-width="2"/>
+      <path d="M-12 -4 C-12 -14, 12 -14, 12 -2 C12 10, -10 12, -10 0 C-10 -8, 6 -8, 6 0 C6 4, -3 4, -3 0" fill="none" stroke="#ffccd5" stroke-width="2.5" stroke-linecap="round"/>
+    </g>`;
+}
+
+/* ==========================================================================
+   5. NAVIGATION & HOMEPAGE (4 DOORS)
+   ========================================================================== */
+function goHome() {
+  state.currentDoor = null;
+  state.hintActive = false;
+  btnHome.classList.add('hidden');
+  btnHint.classList.add('hidden');
+  btnReset.classList.add('hidden');
+  headerTitle.textContent = '🌱 BENGKEL KRAF MESRA ALAM';
+
+  const doneCount = Object.values(state.completedDoors).filter(Boolean).length;
+  setProgress((doneCount / 4) * 100);
+  setMascot('Selamat datang ke Bengkel Kraf Mesra Alam! Jom ubah bahan terpakai menjadi sesuatu yang baharu. Pilih pintu yang kamu suka!');
+  setInstruction('Ketik mana-mana daripada 4 pintu kraf di atas!');
+  dockControls.innerHTML = `
+    <div style="font-family:'Fredoka',sans-serif; font-size:13px; color:#2d6a4f; font-weight:700;">
+      🏆 Kraf Siap: ${doneCount} / 4 Pintu
+    </div>
+  `;
+
+  renderHomepage();
+}
+
+function renderHomepage() {
+  const doors = [
+    {
+      id: 1,
+      cls: 'door-1',
+      title: 'PINTU 1',
+      label: 'Botol Plastik → Pasu Bunga',
+      svg: `
+        <svg viewBox="0 0 130 90" width="125" height="86">
+          <!-- Bottle -->
+          <rect x="20" y="12" width="10" height="7" rx="2" fill="#48cae4"/>
+          <rect x="14" y="19" width="22" height="54" rx="8" fill="#caf0f8" stroke="#0096c7" stroke-width="2.5"/>
+          <rect x="14" y="34" width="22" height="14" fill="#90e0ef"/>
+          <!-- Arrow -->
+          <path d="M44 45 L62 45 M56 39 L63 45 L56 51" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <!-- Flower Pot -->
+          <path d="M74 46 L114 46 L108 76 L80 76 Z" fill="#ffd166" stroke="#f4a261" stroke-width="2.5"/>
+          <line x1="94" y1="46" x2="94" y2="25" stroke="#2b9348" stroke-width="3.5" stroke-linecap="round"/>
+          <circle cx="94" cy="21" r="10" fill="#ffb703"/>
+          <circle cx="94" cy="21" r="5" fill="#6f4518"/>
+        </svg>`
+    },
+    {
+      id: 2,
+      cls: 'door-2',
+      title: 'PINTU 2',
+      label: 'Tin Terpakai → Bekas Alat Tulis',
+      svg: `
+        <svg viewBox="0 0 130 90" width="125" height="86">
+          <!-- Tin -->
+          <rect x="14" y="22" width="26" height="50" rx="4" fill="#e9ecef" stroke="#6c757d" stroke-width="2.5"/>
+          <line x1="14" y1="34" x2="40" y2="34" stroke="#adb5bd" stroke-width="2"/>
+          <line x1="14" y1="58" x2="40" y2="58" stroke="#adb5bd" stroke-width="2"/>
+          <!-- Arrow -->
+          <path d="M46 46 L63 46 M57 40 L64 46 L57 52" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <!-- Pencil Holder -->
+          <rect x="78" y="14" width="6" height="32" rx="2" fill="#ff595e" transform="rotate(-10 78 40)"/>
+          <rect x="98" y="12" width="7" height="34" rx="2" fill="#1982c4" transform="rotate(10 98 40)"/>
+          <rect x="72" y="38" width="38" height="36" rx="6" fill="#ffadad" stroke="#ff758f" stroke-width="2.5"/>
+          <circle cx="91" cy="56" r="6" fill="#ffe66d"/>
+        </svg>`
+    },
+    {
+      id: 3,
+      cls: 'door-3',
+      title: 'PINTU 3',
+      label: 'Kotak Kadbod → Organizer Meja',
+      svg: `
+        <svg viewBox="0 0 130 90" width="125" height="86">
+          <!-- Cardboard Box -->
+          <rect x="12" y="26" width="30" height="44" rx="3" fill="#ddb892" stroke="#7f5539" stroke-width="2.5"/>
+          <line x1="12" y1="36" x2="42" y2="36" stroke="#7f5539" stroke-width="2"/>
+          <!-- Arrow -->
+          <path d="M47 46 L63 46 M57 40 L64 46 L57 52" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <!-- Desk Organizer -->
+          <rect x="72" y="22" width="14" height="32" rx="2" fill="#9bf6ff" stroke="#0096c7" stroke-width="1.5"/>
+          <rect x="92" y="18" width="6" height="34" rx="2" fill="#ffe66d"/>
+          <rect x="69" y="42" width="44" height="32" rx="5" fill="#cdb4db" stroke="#9d4edd" stroke-width="2.5"/>
+          <line x1="91" y1="42" x2="91" y2="74" stroke="#9d4edd" stroke-width="2.5"/>
+        </svg>`
+    },
+    {
+      id: 4,
+      cls: 'door-4',
+      title: 'PINTU 4',
+      label: 'Kertas Terpakai → Bunga Hiasan',
+      svg: `
+        <svg viewBox="0 0 130 90" width="125" height="86">
+          <!-- Scrap Paper -->
+          <rect x="14" y="22" width="26" height="46" rx="3" fill="#fffdf7" stroke="#adb5bd" stroke-width="2.5" transform="rotate(-6 27 45)"/>
+          <line x1="19" y1="34" x2="34" y2="32" stroke="#ced4da" stroke-width="2"/>
+          <line x1="19" y1="43" x2="34" y2="41" stroke="#ced4da" stroke-width="2"/>
+          <!-- Arrow -->
+          <path d="M46 46 L63 46 M57 40 L64 46 L57 52" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <!-- Paper Flower -->
+          <line x1="92" y1="42" x2="92" y2="76" stroke="#52b788" stroke-width="4" stroke-linecap="round"/>
+          <ellipse cx="83" cy="60" rx="8" ry="4" fill="#74c69d" transform="rotate(-25 83 60)"/>
+          <circle cx="92" cy="24" r="7" fill="#ff8fa3"/>
+          <circle cx="102" cy="32" r="7" fill="#ff8fa3"/>
+          <circle cx="98" cy="43" r="7" fill="#ff8fa3"/>
+          <circle cx="86" cy="43" r="7" fill="#ff8fa3"/>
+          <circle cx="82" cy="32" r="7" fill="#ff8fa3"/>
+          <circle cx="92" cy="34" r="6" fill="#ffe66d"/>
+        </svg>`
+    }
+  ];
+
+  arena.innerHTML = `
+    <div id="home-grid">
+      ${doors.map(d => `
+        <div class="door-card ${d.cls}" data-door="${d.id}">
+          ${state.completedDoors[d.id] ? `<div class="door-badge">✓ SELESAI</div>` : ''}
+          <div class="door-interior">✨ JOM! ✨</div>
+          <div class="door-leaf">
+            <div class="door-num">${d.title}</div>
+            <div class="door-visual">${d.svg}</div>
+            <div class="door-label">${d.label}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  document.querySelectorAll('.door-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const doorId = Number(card.dataset.door);
+      sfx.playPop();
+      card.classList.add('opening');
+      setTimeout(() => startDoor(doorId), 460);
+    });
+  });
+}
+
+function startDoor(doorId) {
+  state.currentDoor = doorId;
+  state.step = 1;
+  state.hintActive = false;
+  resetDoorData(doorId);
+
+  btnHome.classList.remove('hidden');
+  btnHint.classList.remove('hidden');
+  btnReset.classList.remove('hidden');
+
+  const titles = {
+    1: '🍼 PINTU 1: PASU BOTOL',
+    2: '🥫 PINTU 2: BEKAS TIN',
+    3: '📦 PINTU 3: ORGANIZER KOTAK',
+    4: '📄 PINTU 4: BUNGA KERTAS'
+  };
+  headerTitle.textContent = titles[doorId];
+  renderCurrentScreen();
+}
+
+function resetDoorData(doorId) {
+  if (doorId === 1) {
+    state.d1 = {
+      cutDone: false, color: '#7bdff2', pattern: 'none', stickers: [],
+      soilLevel: 0, selectedFlower: 'sunflower', seedPlanted: false,
+      waterLevel: 0, growthPhase: 0
+    };
+  } else if (doorId === 2) {
+    state.d2 = {
+      cutDone: false, color: '#ffd166', pattern: 'stripes', stickers: [], placedItems: []
+    };
+  } else if (doorId === 3) {
+    state.d3 = {
+      cutDone: false, dividersPlaced: 0, color: '#ffadad', pattern: 'dots', stickers: [], placedItems: []
+    };
+  } else if (doorId === 4) {
+    state.d4 = {
+      paperColor: '#ff758f', petalsCut: 0, petalsAssembled: 0,
+      centerPlaced: false, stemPlaced: false, leafPlaced: false,
+      centerColor: '#ffe66d', stickers: []
+    };
+  }
+}
+
+function resetCurrentStep() {
+  const d = state.currentDoor, s = state.step;
+  if (d === 1) {
+    if (s === 2) state.d1.cutDone = false;
+    if (s === 3) { state.d1.color = '#7bdff2'; state.d1.pattern = 'none'; state.d1.stickers = []; }
+    if (s === 4) state.d1.soilLevel = 0;
+    if (s === 6) state.d1.seedPlanted = false;
+    if (s === 7) state.d1.waterLevel = 0;
+    if (s === 8) state.d1.growthPhase = 0;
+  } else if (d === 2) {
+    if (s === 2) state.d2.cutDone = false;
+    if (s === 3) { state.d2.color = '#ffd166'; state.d2.pattern = 'stripes'; state.d2.stickers = []; }
+    if (s === 4) state.d2.placedItems = [];
+  } else if (d === 3) {
+    if (s === 2) state.d3.cutDone = false;
+    if (s === 3) state.d3.dividersPlaced = 0;
+    if (s === 4) { state.d3.color = '#ffadad'; state.d3.pattern = 'dots'; state.d3.stickers = []; }
+    if (s === 5) state.d3.placedItems = [];
+  } else if (d === 4) {
+    if (s === 3) state.d4.petalsCut = 0;
+    if (s === 4) state.d4.petalsAssembled = 0;
+    if (s === 5) { state.d4.centerPlaced = false; state.d4.stemPlaced = false; state.d4.leafPlaced = false; }
+    if (s === 6) { state.d4.centerColor = '#ffe66d'; state.d4.stickers = []; }
+  }
+  renderCurrentScreen();
+}
+
+function renderCurrentScreen() {
+  state.hintActive = false;
+  if (state.currentDoor === null) return goHome();
+  if (state.currentDoor === 1) renderDoor1();
+  if (state.currentDoor === 2) renderDoor2();
+  if (state.currentDoor === 3) renderDoor3();
+  if (state.currentDoor === 4) renderDoor4();
+}
+
+/* ==========================================================================
+   6. PINTU 1 — BOTOL PLASTIK MENJADI PASU BUNGA (9 LANGKAH LENGKAP)
+   ========================================================================== */
+function renderDoor1() {
+  const s = state.step;
+  const d = state.d1;
+  setProgress(((s - 1) / 8) * 100);
+
+  // STEP 1: KENALI BOTOL
+  if (s === 1) {
+    setMascot('Botol plastik boleh digunakan semula untuk menghasilkan barang yang bermanfaat. Hari ini kita akan menjadikan botol plastik sebagai pasu bunga!');
+    setInstruction('Tekan butang MULA untuk memulakan simulasi kraf!');
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 280" width="250" height="270" class="pulse-guide">
+        ${getSvgDefs()}
+        <ellipse cx="130" cy="252" rx="56" ry="12" fill="#b08968" opacity="0.45"/>
+        <!-- Cap -->
+        <rect x="114" y="22" width="32" height="16" rx="5" fill="#0096c7" stroke="#023e8a" stroke-width="2.5"/>
+        <!-- Neck & Body -->
+        <path d="M116 38 L116 54 Q84 68 84 95 L84 232 Q84 248 102 248 L158 248 Q176 248 176 232 L176 95 Q176 68 144 54 L144 38 Z"
+              fill="#caf0f8" stroke="#0077b6" stroke-width="3.5"/>
+        <rect x="86" y="112" width="88" height="36" fill="#90e0ef" opacity="0.8"/>
+        <text x="130" y="135" text-anchor="middle" font-family="Fredoka" font-size="13" font-weight="700" fill="#023e8a">AIR MINERAL</text>
+        <path d="M116 38 L116 54 Q84 68 84 95 L84 232 Q84 248 102 248 L158 248 Q176 248 176 232 L176 95 Q176 68 144 54 L144 38 Z"
+              fill="url(#plasticShine)"/>
+      </svg>
+    `;
+    dockControls.innerHTML = `
+      <button class="action-btn btn-primary" id="d1-start">🚀 MULA KRAF</button>
+    `;
+    document.getElementById('d1-start').onclick = () => {
+      sfx.playClick();
+      state.step = 2;
+      renderCurrentScreen();
+    };
+    return;
+  }
+
+  // STEP 2: MEMBENTUK BOTOL MENJADI PASU (GUNTING ANIMASI)
+  if (s === 2) {
+    setMascot('Mari potong bahagian tengah botol plastik dengan kemas untuk membentuk bekas pasu bunga!');
+    setInstruction(d.cutDone ? 'Bagus! Botol plastik kini sudah menjadi pasu.' : 'TEKAN ATAU LERET PADA GARIS PUTUS-PUTUS!');
+    arena.innerHTML = `
+      <svg id="d1-cut-svg" viewBox="0 0 260 280" width="250" height="270">
+        ${getSvgDefs()}
+        <ellipse cx="130" cy="252" rx="56" ry="12" fill="#b08968" opacity="0.45"/>
+        <!-- Bottom Pot Half -->
+        <g id="bottle-bottom">
+          <path d="M84 145 L84 232 Q84 248 102 248 L158 248 Q176 248 176 232 L176 145 Z"
+                fill="#caf0f8" stroke="#0077b6" stroke-width="3.5"/>
+          <path d="M84 145 L84 232 Q84 248 102 248 L158 248 Q176 248 176 232 L176 145 Z"
+                fill="url(#plasticShine)"/>
+          ${d.cutDone ? `<ellipse cx="130" cy="145" rx="46" ry="9" fill="#90e0ef" stroke="#0077b6" stroke-width="3"/>` : ''}
+        </g>
+
+        <!-- Top Bottle Half (moves away when cut) -->
+        <g id="bottle-top" style="transition: transform 0.9s cubic-bezier(0.34,1.56,0.64,1), opacity 0.9s; ${d.cutDone ? 'transform: translate(85px, -65px) rotate(28deg); opacity: 0;' : ''}">
+          <rect x="114" y="22" width="32" height="16" rx="5" fill="#0096c7" stroke="#023e8a" stroke-width="2.5"/>
+          <path d="M116 38 L116 54 Q84 68 84 95 L84 145 L176 145 L176 95 Q176 68 144 54 L144 38 Z"
+                fill="#caf0f8" stroke="#0077b6" stroke-width="3.5"/>
+          <rect x="86" y="106" width="88" height="28" fill="#90e0ef" opacity="0.8"/>
+        </g>
+
+        <!-- Dashed Cut Line & Hitbox -->
+        ${!d.cutDone ? `
+          <g id="cut-zone" style="cursor:pointer;">
+            <line id="cut-line" x1="72" y1="145" x2="188" y2="145" stroke="#ff595e" stroke-width="5" stroke-dasharray="10 7" class="blink-guide"/>
+            <rect x="65" y="122" width="130" height="46" fill="transparent"/>
+            <text x="130" y="133" text-anchor="middle" font-family="Fredoka" font-size="12" font-weight="700" fill="#d90429" class="blink-guide">✂️ TEKAN PADA GARIS</text>
+          </g>
+        ` : ''}
+
+        <!-- Animated Scissors -->
+        <g id="anim-scissors" transform="translate(52, 145)" style="opacity:0; pointer-events:none;">
+          <circle cx="-10" cy="-8" r="7" fill="none" stroke="#ff758f" stroke-width="3.5"/>
+          <circle cx="-10" cy="8" r="7" fill="none" stroke="#ff758f" stroke-width="3.5"/>
+          <path d="M-4 -4 L22 5" stroke="#adb5bd" stroke-width="4" stroke-linecap="round"/>
+          <path d="M-4 4 L22 -5" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="3" cy="0" r="2.5" fill="#333"/>
+        </g>
+      </svg>
+    `;
+
+    if (!d.cutDone) {
+      dockControls.innerHTML = `<div style="font-size:12px; color:#6c757d; font-weight:700;">Sentuh garisan merah putus-putus pada botol</div>`;
+      const cutZone = document.getElementById('cut-zone');
+      let cutting = false;
+      const runCutAnim = () => {
+        if (cutting || d.cutDone) return;
+        cutting = true;
+        cutZone.classList.remove('blink-guide');
+        const sc = document.getElementById('anim-scissors');
+        sc.style.opacity = '1';
+        let pos = 55;
+        const interval = setInterval(() => {
+          pos += 11;
+          const bladeAngle = Math.sin(pos * 0.4) * 8;
+          sc.setAttribute('transform', `translate(${pos}, 145) rotate(${bladeAngle})`);
+          if (pos % 22 === 0) sfx.playSnip();
+          if (pos >= 188) {
+            clearInterval(interval);
+            d.cutDone = true;
+            addStars(1);
+            sfx.playPop();
+            showToast('✂️ Bagus! Botol plastik kini sudah menjadi pasu.');
+            renderCurrentScreen();
+          }
+        }, 45);
+      };
+      cutZone.addEventListener('pointerdown', runCutAnim);
+      cutZone.addEventListener('pointermove', runCutAnim);
+    } else {
+      dockControls.innerHTML = `<button class="action-btn btn-primary" id="d1-s2-next">SETERUSNYA ➜</button>`;
+      document.getElementById('d1-s2-next').onclick = () => {
+        sfx.playClick();
+        state.step = 3;
+        renderCurrentScreen();
+      };
+    }
+    return;
+  }
+
+  // STEP 3: HIAS PASU (WARNA, CORAK & DRAG STICKER)
+  if (s === 3) {
+    setMascot('Cantiknya! Sekarang pilih warna, corak dan seret sticker comel ke atas pasu kamu.');
+    setInstruction('Pilih warna/corak atau SERET sticker ke atas pasu!');
+    const colors = ['#7bdff2', '#ffadad', '#ffd166', '#cdb4db', '#95d5b2', '#ffd6a5'];
+    const patterns = [
+      { id: 'none', label: 'Polos' },
+      { id: 'dots', label: 'Bintik' },
+      { id: 'stripes', label: 'Jalur' },
+      { id: 'waves', label: 'Ombak' }
+    ];
+    const stickersList = ['🌸', '🍃', '⭐', '💖', '🦋', '🌈'];
+
+    arena.innerHTML = `
+      <svg id="pot-drop-zone" viewBox="0 0 260 260" width="245" height="245">
+        ${getSvgDefs()}
+        <ellipse cx="130" cy="238" rx="64" ry="13" fill="#b08968" opacity="0.45"/>
+        <!-- Pot Body -->
+        <path d="M74 105 L82 224 Q84 236 100 236 L160 236 Q176 236 178 224 L186 105 Z"
+              fill="${d.color}" stroke="#5c4033" stroke-width="3.5"/>
+        ${d.pattern !== 'none' ? `
+          <path d="M74 105 L82 224 Q84 236 100 236 L160 236 Q176 236 178 224 L186 105 Z"
+                fill="${getPatternOverlay(d.pattern)}"/>
+        ` : ''}
+        <path d="M74 105 L82 224 Q84 236 100 236 L160 236 Q176 236 178 224 L186 105 Z"
+              fill="url(#plasticShine)"/>
+        <!-- Pot Rim -->
+        <ellipse cx="130" cy="105" rx="56" ry="11" fill="#495057" stroke="#5c4033" stroke-width="3"/>
+        <!-- Placed Stickers -->
+        ${d.stickers.map(st => `
+          <text x="${st.x}" y="${st.y}" font-size="26" text-anchor="middle" dominant-baseline="central">${st.emoji}</text>
+        `).join('')}
+      </svg>
+    `;
+
+    dockControls.innerHTML = `
+      <div class="palette-row">
+        ${colors.map(c => `<button class="swatch-btn ${d.color === c ? 'active' : ''}" style="background:${c}" data-col="${c}"></button>`).join('')}
+      </div>
+      <div class="palette-row">
+        ${patterns.map(p => `<button class="pattern-btn ${d.pattern === p.id ? 'active' : ''}" data-pat="${p.id}">${p.label}</button>`).join('')}
+      </div>
+      <div class="palette-row">
+        ${stickersList.map(st => `<div class="sticker-chip" data-emoji="${st}">${st}</div>`).join('')}
+        <button class="action-btn btn-primary" style="padding:7px 14px; font-size:13px;" id="d1-s3-next">SIAP HIAS ➜</button>
+      </div>
+    `;
+
+    document.querySelectorAll('.swatch-btn').forEach(b => {
+      b.onclick = () => { sfx.playClick(); d.color = b.dataset.col; renderCurrentScreen(); };
+    });
+    document.querySelectorAll('.pattern-btn').forEach(b => {
+      b.onclick = () => { sfx.playClick(); d.pattern = b.dataset.pat; renderCurrentScreen(); };
+    });
+
+    const potSvg = document.getElementById('pot-drop-zone');
+    document.querySelectorAll('.sticker-chip').forEach(chip => {
+      makeDraggable({
+        element: chip,
+        payload: chip.dataset.emoji,
+        renderGhostHTML: (em) => `<div style="font-size:34px;">${em}</div>`,
+        onDropCheck: (cx, cy, em) => {
+          if (isInsideRect(cx, cy, potSvg, -10)) {
+            const r = potSvg.getBoundingClientRect();
+            const svgX = Math.max(92, Math.min(168, ((cx - r.left) / r.width) * 260));
+            const svgY = Math.max(125, Math.min(218, ((cy - r.top) / r.height) * 260));
+            d.stickers.push({ emoji: em, x: svgX, y: svgY });
+            sfx.playPop();
+            renderCurrentScreen();
+            return true;
+          }
+          return false;
+        }
+      });
+    });
+
+    document.getElementById('d1-s3-next').onclick = () => {
+      sfx.playClick();
+      addStars(1);
+      state.step = 4;
+      renderCurrentScreen();
+    };
+    return;
+  }
+
+  // STEP 4: MASUKKAN TANAH KE DALAM PASU (DRAG SOIL BAG & POURING PARTICLES)
+  if (s === 4) {
+    const full = d.soilLevel >= 100;
+    setMascot(full ? 'Pasu kamu sudah berisi tanah! Sekarang pilih bunga yang ingin ditanam.' : 'Seret pek tanah tanaman ke atas pasu dan tahan seketika supaya tanah dituang masuk!');
+    setInstruction(full ? 'Tanah penuh! Tekan SETERUSNYA untuk pilih bunga.' : 'SERET PEK TANAH KE ATAS PASU 🌱');
+
+    arena.innerHTML = `
+      <svg id="d1-soil-svg" viewBox="0 0 280 260" width="265" height="245">
+        ${getSvgDefs()}
+        <ellipse cx="105" cy="238" rx="60" ry="12" fill="#b08968" opacity="0.45"/>
+
+        <!-- Target Highlight Zone above Pot -->
+        ${!full ? `
+          <ellipse id="soil-target" cx="105" cy="70" rx="52" ry="26" fill="#ffd166" opacity="0.35" stroke="#f4a261" stroke-width="3" stroke-dasharray="8 5" class="blink-guide"/>
+          <text x="105" y="40" text-anchor="middle" font-family="Fredoka" font-size="11" font-weight="700" fill="#bc6c25" class="blink-guide">⬇ TUANG DI SINI</text>
+        ` : ''}
+
+        <!-- Decorated Pot -->
+        <path d="M52 108 L60 224 Q62 236 78 236 L132 236 Q148 236 150 224 L158 108 Z"
+              fill="${d.color}" stroke="#5c4033" stroke-width="3.5"/>
+        ${d.pattern !== 'none' ? `<path d="M52 108 L60 224 Q62 236 78 236 L132 236 Q148 236 150 224 L158 108 Z" fill="${getPatternOverlay(d.pattern)}"/>` : ''}
+        <ellipse cx="105" cy="108" rx="53" ry="10" fill="#495057" stroke="#5c4033" stroke-width="3"/>
+
+        <!-- Rising Soil Layer inside Pot Rim -->
+        ${d.soilLevel > 0 ? `
+          <ellipse cx="105" cy="${114 - (d.soilLevel / 100) * 8}" rx="${32 + (d.soilLevel / 100) * 18}" ry="${5 + (d.soilLevel / 100) * 4}" fill="#7f4f24" stroke="#582f0e" stroke-width="2"/>
+        ` : ''}
+
+        ${d.stickers.map(st => `<text x="${st.x - 25}" y="${st.y}" font-size="22" text-anchor="middle">${st.emoji}</text>`).join('')}
+
+        <!-- Falling Soil Particles Layer -->
+        <g id="soil-particles"></g>
+
+        <!-- Cute Draggable Soil Bag -->
+        <g id="soil-bag-token" class="drag-token ${!full ? 'blink-guide' : ''}" transform="translate(218, 175)">
+          <rect x="-34" y="-44" width="68" height="84" rx="12" fill="#bc6c25" stroke="#582f0e" stroke-width="3"/>
+          <path d="M-34 -32 L34 -32" stroke="#dda15e" stroke-width="4"/>
+          <circle cx="0" cy="-4" r="16" fill="#fefae0"/>
+          <path d="M0 4 L0 -10 M0 -6 Q-8 -12 -10 -4 M0 -8 Q8 -14 10 -6" stroke="#2b9348" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <text x="0" y="26" text-anchor="middle" font-family="Fredoka" font-size="10" font-weight="700" fill="#fefae0">TANAH</text>
+        </g>
+      </svg>
+    `;
+
+    if (!full) {
+      dockControls.innerHTML = `
+        <div style="width:100%; text-align:center; font-family:'Fredoka',sans-serif; font-size:13px; font-weight:700; color:#7f4f24;">
+          Paras Tanah: <span id="soil-pct">${d.soilLevel}</span>%
+        </div>
+      `;
+
+      const soilBag = document.getElementById('soil-bag-token');
+      const targetEl = document.getElementById('soil-target');
+      const particlesG = document.getElementById('soil-particles');
+      let pourTimer = null;
+
+      makeDraggable({
+        element: soilBag,
+        payload: 'soil',
+        renderGhostHTML: () => `
+          <svg width="84" height="94" viewBox="-42 -48 84 96" style="transform: rotate(-42deg);">
+            <rect x="-34" y="-44" width="68" height="84" rx="12" fill="#bc6c25" stroke="#582f0e" stroke-width="3"/>
+            <circle cx="0" cy="-4" r="15" fill="#fefae0"/>
+            <text x="0" y="25" text-anchor="middle" font-family="Fredoka" font-size="10" font-weight="700" fill="#fefae0">TANAH</text>
+          </svg>`,
+        onDragMove: (cx, cy) => {
+          if (isInsideRect(cx, cy, targetEl, 24)) {
+            if (!pourTimer) {
+              pourTimer = setInterval(() => {
+                if (d.soilLevel >= 100) {
+                  clearInterval(pourTimer);
+                  pourTimer = null;
+                  dragProxy.style.display = 'none';
+                  addStars(1);
+                  sfx.playPop();
+                  showToast('🌱 Pasu kamu sudah berisi tanah!');
+                  renderCurrentScreen();
+                  return;
+                }
+                d.soilLevel = Math.min(100, d.soilLevel + 10);
+                const pctEl = document.getElementById('soil-pct');
+                if (pctEl) pctEl.textContent = d.soilLevel;
+                sfx.playSoil();
+
+                // Spawn falling soil particle
+                const p = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                p.setAttribute('cx', 92 + Math.random() * 26);
+                p.setAttribute('cy', 76);
+                p.setAttribute('r', 3.5);
+                p.setAttribute('fill', '#582f0e');
+                particlesG.appendChild(p);
+                let py = 76;
+                const fall = setInterval(() => {
+                  py += 8;
+                  p.setAttribute('cy', py);
+                  if (py >= 108) { clearInterval(fall); p.remove(); }
+                }, 30);
+              }, 160);
+            }
+          } else if (pourTimer) {
+            clearInterval(pourTimer);
+            pourTimer = null;
+          }
+        },
+        onDragEnd: () => {
+          if (pourTimer) { clearInterval(pourTimer); pourTimer = null; }
+          if (d.soilLevel > 0 && d.soilLevel < 100) renderCurrentScreen();
+        }
+      });
+    } else {
+      dockControls.innerHTML = `<button class="action-btn btn-primary" id="d1-s4-next">PILIH BUNGA ➜</button>`;
+      document.getElementById('d1-s4-next').onclick = () => {
+        sfx.playClick();
+        state.step = 5;
+        renderCurrentScreen();
+      };
+    }
+    return;
+  }
+
+  // STEP 5: PILIH BUNGA (KAD ILUSTRASI + BIJI BENIH)
+  if (s === 5) {
+    setMascot('Pilih jenis bunga yang ingin kamu tanam! Setiap bunga mempunyai biji benih tersendiri.');
+    setInstruction('Ketik kad bunga pilihan kamu di bawah!');
+    const flowers = [
+      { id: 'sunflower', name: 'Matahari', seedCol: '#3d2c2e' },
+      { id: 'tulip', name: 'Tulip', seedCol: '#bc6c25' },
+      { id: 'daisy', name: 'Daisy', seedCol: '#dda15e' },
+      { id: 'rose', name: 'Mawar', seedCol: '#6f1d1b' }
+    ];
+    const chosen = flowers.find(f => f.id === d.selectedFlower);
+
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 250" width="245" height="235">
+        ${getSvgDefs()}
+        <!-- Preview Card of Flower & Seed Packet -->
+        <rect x="45" y="18" width="170" height="212" rx="22" fill="#ffffff" stroke="#95d5b2" stroke-width="4"/>
+        <text x="130" y="46" text-anchor="middle" font-family="Fredoka" font-size="15" font-weight="700" fill="#2d6a4f">BUNGA ${chosen.name.toUpperCase()}</text>
+        ${renderFlowerHeadSVG(chosen.id, 130, 102, 1.45)}
+        <!-- Seed Packet Preview -->
+        <rect x="85" y="152" width="54" height="62" rx="8" fill="#fefae0" stroke="#f4a261" stroke-width="2.5"/>
+        <text x="112" y="176" text-anchor="middle" font-family="Fredoka" font-size="9" font-weight="700" fill="#bc6c25">PEK BENIH</text>
+        <text x="112" y="190" text-anchor="middle" font-family="Fredoka" font-size="9" font-weight="700" fill="#2b9348">${chosen.name}</text>
+        <!-- Seeds -->
+        <ellipse cx="164" cy="176" rx="6" ry="9" fill="${chosen.seedCol}" transform="rotate(-18 164 176)"/>
+        <ellipse cx="176" cy="194" rx="6" ry="9" fill="${chosen.seedCol}" transform="rotate(20 176 194)"/>
+      </svg>
+    `;
+
+    dockControls.innerHTML = `
+      <div class="flower-grid">
+        ${flowers.map(f => `
+          <div class="flower-card ${d.selectedFlower === f.id ? 'selected' : ''}" data-fl="${f.id}">
+            <svg viewBox="-26 -26 52 52" width="36" height="36">${renderFlowerHeadSVG(f.id, 0, 0, 0.85)}</svg>
+            <span>${f.name}</span>
+          </div>
+        `).join('')}
+      </div>
+      <button class="action-btn btn-primary" style="padding:8px 18px; font-size:14px;" id="d1-s5-next">AMBIL BENIH ➜</button>
+    `;
+
+    document.querySelectorAll('.flower-card').forEach(c => {
+      c.onclick = () => {
+        sfx.playClick();
+        d.selectedFlower = c.dataset.fl;
+        renderCurrentScreen();
+      };
+    });
+
+    document.getElementById('d1-s5-next').onclick = () => {
+      sfx.playClick();
+      state.step = 6;
+      renderCurrentScreen();
+    };
+    return;
+  }
+
+  // STEP 6: TANAM BIJI BENIH (DRAG SEED INTO SOIL)
+  if (s === 6) {
+    setMascot(d.seedPlanted ? 'Benih sudah ditanam! Mari siram supaya benih mendapat air.' : 'Seret biji benih dari pek benih ke dalam tanah di tengah pasu!');
+    setInstruction(d.seedPlanted ? 'Benih tertimbus kemas di dalam tanah!' : 'SERET BIJI BENIH KE DALAM TANAH');
+
+    arena.innerHTML = `
+      <svg viewBox="0 0 280 260" width="265" height="245">
+        ${getSvgDefs()}
+        <ellipse cx="105" cy="238" rx="60" ry="12" fill="#b08968" opacity="0.45"/>
+        <!-- Pot -->
+        <path d="M52 108 L60 224 Q62 236 78 236 L132 236 Q148 236 150 224 L158 108 Z"
+              fill="${d.color}" stroke="#5c4033" stroke-width="3.5"/>
+        ${d.pattern !== 'none' ? `<path d="M52 108 L60 224 Q62 236 78 236 L132 236 Q148 236 150 224 L158 108 Z" fill="${getPatternOverlay(d.pattern)}"/>` : ''}
+        <ellipse cx="105" cy="108" rx="53" ry="10" fill="#495057" stroke="#5c4033" stroke-width="3"/>
+        <ellipse cx="105" cy="106" rx="50" ry="9" fill="#7f4f24" stroke="#582f0e" stroke-width="2"/>
+        ${d.stickers.map(st => `<text x="${st.x - 25}" y="${st.y}" font-size="22" text-anchor="middle">${st.emoji}</text>`).join('')}
+
+        <!-- Soil Target -->
+        <ellipse id="seed-target" cx="105" cy="106" rx="46" ry="16" fill="${d.seedPlanted ? 'none' : 'rgba(255,230,109,0.45)'}"
+                 stroke="${d.seedPlanted ? 'none' : '#ffd166'}" stroke-width="3" stroke-dasharray="6 4" class="${!d.seedPlanted ? 'blink-guide' : ''}"/>
+
+        <!-- Covered Soil Mound when planted -->
+        ${d.seedPlanted ? `
+          <ellipse cx="105" cy="105" rx="18" ry="6" fill="#582f0e"/>
+          <text x="105" y="82" text-anchor="middle" font-family="Fredoka" font-size="12" font-weight="700" fill="#2b9348">✨ BENIH TERTANAM!</text>
+        ` : ''}
+
+        <!-- Seed Packet + Draggable Seed -->
+        <g transform="translate(218, 175)">
+          <rect x="-32" y="-42" width="64" height="80" rx="10" fill="#fefae0" stroke="#f4a261" stroke-width="3"/>
+          <text x="0" y="-16" text-anchor="middle" font-family="Fredoka" font-size="10" font-weight="700" fill="#bc6c25">PEK BENIH</text>
+          ${!d.seedPlanted ? `
+            <g id="seed-token" class="drag-token blink-guide" transform="translate(0, 14)">
+              <circle cx="0" cy="0" r="22" fill="#ffd166" opacity="0.45"/>
+              <ellipse cx="0" cy="0" rx="8" ry="12" fill="#3d2c2e" stroke="#ffffff" stroke-width="2"/>
+            </g>
+          ` : `<text x="0" y="18" text-anchor="middle" font-size="18">✅</text>`}
+        </g>
+      </svg>
+    `;
+
+    if (!d.seedPlanted) {
+      dockControls.innerHTML = `<div style="font-size:12px; color:#6c757d; font-weight:700;">Seret biji benih hitam ke permukaan tanah pasu</div>`;
+      const seedEl = document.getElementById('seed-token');
+      const targetEl = document.getElementById('seed-target');
+      makeDraggable({
+        element: seedEl,
+        payload: 'seed',
+        renderGhostHTML: () => `<div style="width:24px;height:30px;background:#3d2c2e;border:3px solid #fff;border-radius:50%;"></div>`,
+        onDropCheck: (cx, cy) => {
+          if (isInsideRect(cx, cy, targetEl, 24)) {
+            d.seedPlanted = true;
+            addStars(1);
+            sfx.playPop();
+            showToast('🌱 Benih sudah ditanam!');
+            renderCurrentScreen();
+            return true;
+          }
+          return false;
+        }
+      });
+    } else {
+      dockControls.innerHTML = `<button class="action-btn btn-primary" id="d1-s6-next">SIRAM AIR ➜</button>`;
+      document.getElementById('d1-s6-next').onclick = () => {
+        sfx.playClick();
+        state.step = 7;
+        renderCurrentScreen();
+      };
+    }
+    return;
+  }
+
+  // STEP 7: SIRAM AIR (DRAG WATERING CAN & FALLING DROPLETS)
+  if (s === 7) {
+    const watered = d.waterLevel >= 100;
+    const soilColor = d.waterLevel > 40 ? '#432818' : '#7f4f24';
+    setMascot(watered ? 'Syabas! Benih sudah mendapat air. Mari lihat bagaimana ia tumbuh!' : 'Seret penyiram air ke atas pasu dan tahan untuk menyiram benih!');
+    setInstruction(watered ? 'Penyiraman selesai! Sedia untuk melihat pertumbuhan.' : 'SERET PENYIRAM AIR KE ATAS PASU 💧');
+
+    arena.innerHTML = `
+      <svg viewBox="0 0 280 260" width="265" height="245">
+        ${getSvgDefs()}
+        <ellipse cx="105" cy="238" rx="60" ry="12" fill="#b08968" opacity="0.45"/>
+        <!-- Pot -->
+        <path d="M52 108 L60 224 Q62 236 78 236 L132 236 Q148 236 150 224 L158 108 Z"
+              fill="${d.color}" stroke="#5c4033" stroke-width="3.5"/>
+        ${d.pattern !== 'none' ? `<path d="M52 108 L60 224 Q62 236 78 236 L132 236 Q148 236 150 224 L158 108 Z" fill="${getPatternOverlay(d.pattern)}"/>` : ''}
+        <ellipse cx="105" cy="108" rx="53" ry="10" fill="#495057" stroke="#5c4033" stroke-width="3"/>
+        <ellipse cx="105" cy="106" rx="50" ry="9" fill="${soilColor}" stroke="#3d2c2e" stroke-width="2"/>
+        ${d.stickers.map(st => `<text x="${st.x - 25}" y="${st.y}" font-size="22" text-anchor="middle">${st.emoji}</text>`).join('')}
+
+        ${!watered ? `
+          <ellipse id="water-target" cx="105" cy="64" rx="50" ry="26" fill="#90e0ef" opacity="0.4" stroke="#0096c7" stroke-width="3" stroke-dasharray="8 5" class="blink-guide"/>
+          <text x="105" y="34" text-anchor="middle" font-family="Fredoka" font-size="11" font-weight="700" fill="#0077b6" class="blink-guide">💧 SIRAM DI SINI</text>
+        ` : `<text x="105" y="84" text-anchor="middle" font-family="Fredoka" font-size="12" font-weight="700" fill="#0077b6">✨ TANAH LEMBAP!</text>`}
+
+        <g id="water-drops"></g>
+
+        <!-- Cute Cartoon Watering Can -->
+        <g id="watering-can-token" class="drag-token ${!watered ? 'blink-guide' : ''}" transform="translate(215, 178)">
+          <path d="M22 -14 C36 -14, 36 14, 22 14" fill="none" stroke="#0096c7" stroke-width="5" stroke-linecap="round"/>
+          <path d="M-22 6 L-44 -14 L-40 -19 L-18 -2 Z" fill="#48cae4" stroke="#0077b6" stroke-width="2.5"/>
+          <ellipse cx="-44" cy="-17" rx="4" ry="7" fill="#90e0ef" stroke="#0077b6" stroke-width="2" transform="rotate(-40 -44 -17)"/>
+          <rect x="-24" y="-18" width="46" height="40" rx="10" fill="#48cae4" stroke="#0077b6" stroke-width="3"/>
+          <circle cx="-4" cy="2" r="7" fill="#ffe66d"/>
+        </g>
+      </svg>
+    `;
+
+    if (!watered) {
+      dockControls.innerHTML = `
+        <div style="width:100%; text-align:center; font-family:'Fredoka',sans-serif; font-size:13px; font-weight:700; color:#0077b6;">
+          Kelembapan Air: <span id="water-pct">${d.waterLevel}</span>%
+        </div>
+      `;
+      const canEl = document.getElementById('watering-can-token');
+      const targetEl = document.getElementById('water-target');
+      const dropsG = document.getElementById('water-drops');
+      let waterTimer = null;
+
+      makeDraggable({
+        element: canEl,
+        payload: 'water',
+        renderGhostHTML: () => `
+          <svg width="96" height="76" viewBox="-52 -32 96 76" style="transform: rotate(-32deg);">
+            <path d="M-22 6 L-44 -14 L-40 -19 L-18 -2 Z" fill="#48cae4" stroke="#0077b6" stroke-width="2.5"/>
+            <rect x="-24" y="-18" width="46" height="40" rx="10" fill="#48cae4" stroke="#0077b6" stroke-width="3"/>
+          </svg>`,
+        onDragMove: (cx, cy) => {
+          if (isInsideRect(cx, cy, targetEl, 26)) {
+            if (!waterTimer) {
+              waterTimer = setInterval(() => {
+                if (d.waterLevel >= 100) {
+                  clearInterval(waterTimer);
+                  waterTimer = null;
+                  dragProxy.style.display = 'none';
+                  addStars(1);
+                  sfx.playPop();
+                  showToast('💧 Syabas! Benih sudah mendapat air.');
+                  renderCurrentScreen();
+                  return;
+                }
+                d.waterLevel = Math.min(100, d.waterLevel + 10);
+                const pctEl = document.getElementById('water-pct');
+                if (pctEl) pctEl.textContent = d.waterLevel;
+                sfx.playWater();
+
+                const drop = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+                drop.setAttribute('cx', 88 + Math.random() * 34);
+                drop.setAttribute('cy', 68);
+                drop.setAttribute('rx', 3);
+                drop.setAttribute('ry', 5);
+                drop.setAttribute('fill', '#00b4d8');
+                dropsG.appendChild(drop);
+                let dy = 68;
+                const fall = setInterval(() => {
+                  dy += 8;
+                  drop.setAttribute('cy', dy);
+                  if (dy >= 105) { clearInterval(fall); drop.remove(); }
+                }, 30);
+              }, 160);
+            }
+          } else if (waterTimer) {
+            clearInterval(waterTimer);
+            waterTimer = null;
+          }
+        },
+        onDragEnd: () => {
+          if (waterTimer) { clearInterval(waterTimer); waterTimer = null; }
+          if (d.waterLevel > 0 && d.waterLevel < 100) renderCurrentScreen();
+        }
+      });
+    } else {
+      dockControls.innerHTML = `<button class="action-btn btn-primary" id="d1-s7-next">LIHAT TUMBUH 🌱</button>`;
+      document.getElementById('d1-s7-next').onclick = () => {
+        sfx.playClick();
+        state.step = 8;
+        d.growthPhase = 1;
+        renderCurrentScreen();
+      };
+    }
+    return;
+  }
+
+  // STEP 8: ANIMASI BENIH TUMBUH MENJADI BUNGA (5 FASA BERPERINGKAT)
+  if (s === 8) {
+    const phaseNames = [
+      '',
+      'Fasa 1: Benih di dalam tanah lembap...',
+      'Fasa 2: Benih mula bercambah!',
+      'Fasa 3: Pokok membesar dengan daun!',
+      'Fasa 4: Putik bunga muncul!',
+      'Fasa 5: Bunga mekar sepenuhnya! 🌸'
+    ];
+    setMascot('Perhatikan keajaiban alam! Biji benih sedang membesar menjadi bunga pilihan kamu.');
+    setInstruction(phaseNames[d.growthPhase] || phaseNames[1]);
+
+    const p = d.growthPhase;
+    // Calculate smooth growth SVG elements by phase 1..5
+    const stemTopY = p === 1 ? 148 : p === 2 ? 126 : p === 3 ? 98 : 74;
+    const leafScale = p <= 1 ? 0 : p === 2 ? 0.5 : p === 3 ? 0.95 : 1.15;
+    const budScale = p === 4 ? 0.55 : p >= 5 ? 1.15 : 0;
+
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 280" width="250" height="270">
+        ${getSvgDefs()}
+        <ellipse cx="130" cy="262" rx="62" ry="12" fill="#b08968" opacity="0.45"/>
+
+        <!-- Pot at lower center -->
+        <path d="M78 148 L86 250 Q88 260 102 260 L158 260 Q172 260 174 250 L182 148 Z"
+              fill="${d.color}" stroke="#5c4033" stroke-width="3.5"/>
+        ${d.pattern !== 'none' ? `<path d="M78 148 L86 250 Q88 260 102 260 L158 260 Q172 260 174 250 L182 148 Z" fill="${getPatternOverlay(d.pattern)}"/>` : ''}
+        <ellipse cx="130" cy="148" rx="52" ry="9" fill="#495057" stroke="#5c4033" stroke-width="3"/>
+        <ellipse cx="130" cy="146" rx="49" ry="8" fill="#432818"/>
+        ${d.stickers.map(st => `<text x="${st.x}" y="${st.y + 32}" font-size="22" text-anchor="middle">${st.emoji}</text>`).join('')}
+
+        <!-- Plant Group -->
+        <g class="${p >= 3 ? 'sway-plant' : ''}">
+          ${p === 1 ? `<ellipse cx="130" cy="143" rx="12" ry="5" fill="#7f4f24" class="pulse-guide"/>` : ''}
+
+          ${p >= 2 ? `
+            <path d="M130 146 Q128 ${(146 + stemTopY) / 2} 130 ${stemTopY}" stroke="#2b9348" stroke-width="${p >= 3 ? 6 : 4}" fill="none" stroke-linecap="round"/>
+          ` : ''}
+
+          ${p >= 2 ? `
+            <g transform="translate(130, 122) scale(${leafScale})">
+              <path d="M0 0 Q-24 -12 -30 4 Q-14 14 0 0 Z" fill="#52b788" stroke="#2d6a4f" stroke-width="2"/>
+              <path d="M0 -4 Q24 -16 30 0 Q14 10 0 -4 Z" fill="#74c69d" stroke="#2d6a4f" stroke-width="2"/>
+            </g>
+          ` : ''}
+
+          ${p >= 3 ? `
+            <g transform="translate(130, 98) scale(${leafScale * 0.9})">
+              <path d="M0 0 Q-22 -14 -28 2 Q-12 12 0 0 Z" fill="#74c69d" stroke="#2d6a4f" stroke-width="2"/>
+              <path d="M0 -3 Q22 -16 28 0 Q12 10 0 -3 Z" fill="#52b788" stroke="#2d6a4f" stroke-width="2"/>
+            </g>
+          ` : ''}
+
+          ${p === 4 ? `
+            <ellipse cx="130" cy="${stemTopY - 6}" rx="9" ry="13" fill="#80b918" stroke="#2b9348" stroke-width="2.5"/>
+          ` : ''}
+
+          ${p >= 5 ? `
+            ${renderFlowerHeadSVG(d.selectedFlower, 130, stemTopY - 4, budScale)}
+            <text x="82" y="55" font-size="18">✨</text>
+            <text x="178" y="65" font-size="18">✨</text>
+            <text x="130" y="28" font-size="20" text-anchor="middle">🌟</text>
+          ` : ''}
+        </g>
+      </svg>
+    `;
+
+    dockControls.innerHTML = `
+      <div style="font-family:'Fredoka',sans-serif; font-size:13px; color:#2b9348; font-weight:700;">
+        Pertumbuhan: Fasa ${p} / 5
+      </div>
+    `;
+
+    if (p < 5) {
+      clearTimeout(arena._growTimer);
+      arena._growTimer = setTimeout(() => {
+        if (state.currentDoor === 1 && state.step === 8) {
+          d.growthPhase++;
+          if (d.growthPhase === 5) {
+            sfx.playBloom();
+            addStars(2);
+          } else {
+            sfx.playTone(350 + d.growthPhase * 90, 'sine', 0.2, 0.12);
+          }
+          renderCurrentScreen();
+        }
+      }, 1150);
+    } else {
+      dockControls.innerHTML = `<button class="action-btn btn-primary" id="d1-s8-next">LIHAT HASIL AKHIR 🏆</button>`;
+      document.getElementById('d1-s8-next').onclick = () => {
+        sfx.playClick();
+        state.step = 9;
+        renderCurrentScreen();
+      };
+    }
+    return;
+  }
+
+  // STEP 9: HASIL AKHIR PASU BUNGA
+  if (s === 9) {
+    state.completedDoors[1] = true;
+    setProgress(100);
+    sfx.playFanfare();
+    setMascot('Tahniah! Kamu berjaya menggunakan semula botol plastik menjadi pasu bunga dan menanam bunga baharu. 🌱');
+    setInstruction('Kraf Pintu 1 Selesai! Tekan SETERUSNYA untuk kembali ke 4 pintu.');
+
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 280" width="250" height="270">
+        ${getSvgDefs()}
+        <ellipse cx="130" cy="262" rx="64" ry="12" fill="#b08968" opacity="0.45"/>
+        <!-- Pot -->
+        <path d="M78 148 L86 250 Q88 260 102 260 L158 260 Q172 260 174 250 L182 148 Z"
+              fill="${d.color}" stroke="#5c4033" stroke-width="3.5"/>
+        ${d.pattern !== 'none' ? `<path d="M78 148 L86 250 Q88 260 102 260 L158 260 Q172 260 174 250 L182 148 Z" fill="${getPatternOverlay(d.pattern)}"/>` : ''}
+        <ellipse cx="130" cy="148" rx="52" ry="9" fill="#495057" stroke="#5c4033" stroke-width="3"/>
+        <ellipse cx="130" cy="146" rx="49" ry="8" fill="#432818"/>
+        ${d.stickers.map(st => `<text x="${st.x}" y="${st.y + 32}" font-size="22" text-anchor="middle">${st.emoji}</text>`).join('')}
+
+        <!-- Full Bloomed Plant -->
+        <g class="sway-plant">
+          <path d="M130 146 Q128 110 130 74" stroke="#2b9348" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <g transform="translate(130, 122) scale(1.15)">
+            <path d="M0 0 Q-24 -12 -30 4 Q-14 14 0 0 Z" fill="#52b788" stroke="#2d6a4f" stroke-width="2"/>
+            <path d="M0 -4 Q24 -16 30 0 Q14 10 0 -4 Z" fill="#74c69d" stroke="#2d6a4f" stroke-width="2"/>
+          </g>
+          <g transform="translate(130, 98) scale(1.0)">
+            <path d="M0 0 Q-22 -14 -28 2 Q-12 12 0 0 Z" fill="#74c69d" stroke="#2d6a4f" stroke-width="2"/>
+            <path d="M0 -3 Q22 -16 28 0 Q12 10 0 -3 Z" fill="#52b788" stroke="#2d6a4f" stroke-width="2"/>
+          </g>
+          ${renderFlowerHeadSVG(d.selectedFlower, 130, 70, 1.2)}
+        </g>
+
+        <!-- Celebration Stars -->
+        <text x="52" y="52" font-size="24">⭐</text>
+        <text x="208" y="52" font-size="24">⭐</text>
+        <text x="130" y="24" font-size="26" text-anchor="middle">🎉</text>
+      </svg>
+    `;
+
+    dockControls.innerHTML = `
+      <button class="action-btn btn-secondary" id="d1-replay">🔄 MAIN SEMULA</button>
+      <button class="action-btn btn-primary" id="d1-done">SETERUSNYA 🏠</button>
+    `;
+    document.getElementById('d1-replay').onclick = () => { sfx.playClick(); startDoor(1); };
+    document.getElementById('d1-done').onclick = () => { sfx.playClick(); goHome(); };
+  }
+}
+
+/* ==========================================================================
+   7. PINTU 2 — TIN TERPAKAI MENJADI BEKAS ALAT TULIS (5 LANGKAH)
+   ========================================================================== */
+function renderDoor2() {
+  const s = state.step;
+  const d = state.d2;
+  setProgress(((s - 1) / 4) * 100);
+
+  // STEP 1: KENALI TIN
+  if (s === 1) {
+    setMascot('Tin makanan terpakai sangat kukuh dan sesuai dijadikan bekas alat tulis yang cantik di atas meja belajar!');
+    setInstruction('Tekan MULA untuk membentuk tin terpakai!');
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 270" width="245" height="255" class="pulse-guide">
+        ${getSvgDefs()}
+        <ellipse cx="130" cy="245" rx="64" ry="13" fill="#b08968" opacity="0.45"/>
+        <rect x="74" y="64" width="112" height="176" rx="10" fill="url(#metalGrad)" stroke="#495057" stroke-width="3.5"/>
+        <ellipse cx="130" cy="64" rx="56" ry="12" fill="#adb5bd" stroke="#495057" stroke-width="3"/>
+        <line x1="74" y1="106" x2="186" y2="106" stroke="#6c757d" stroke-width="2.5"/>
+        <line x1="74" y1="196" x2="186" y2="196" stroke="#6c757d" stroke-width="2.5"/>
+        <rect x="82" y="118" width="96" height="66" rx="6" fill="#ffd6a5" opacity="0.85"/>
+        <text x="130" y="156" text-anchor="middle" font-family="Fredoka" font-size="14" font-weight="700" fill="#7f4f24">TIN TERPAKAI</text>
+      </svg>
+    `;
+    dockControls.innerHTML = `<button class="action-btn btn-primary" id="d2-s1">🚀 MULA KRAF</button>`;
+    document.getElementById('d2-s1').onclick = () => { sfx.playClick(); state.step = 2; renderCurrentScreen(); };
+    return;
+  }
+
+  // STEP 2: KEMASKAN TEPI TIN DENGAN GUNTING ANIMASI
+  if (s === 2) {
+    setMascot('Mari potong dan kemaskan bahagian atas tin supaya tepinya rata dan selamat digunakan!');
+    setInstruction(d.cutDone ? 'Hebat! Tepi tin telah dikemaskan dengan selamat.' : 'TEKAN PADA GARIS PUTUS-PUTUS DI ATAS TIN!');
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 270" width="245" height="255">
+        ${getSvgDefs()}
+        <ellipse cx="130" cy="245" rx="64" ry="13" fill="#b08968" opacity="0.45"/>
+        <!-- Main Tin Body -->
+        <rect x="74" y="88" width="112" height="152" rx="10" fill="url(#metalGrad)" stroke="#495057" stroke-width="3.5"/>
+        ${d.cutDone ? `
+          <ellipse cx="130" cy="88" rx="56" ry="11" fill="#495057" stroke="#ffd166" stroke-width="4"/>
+          <text x="130" y="64" text-anchor="middle" font-family="Fredoka" font-size="13" font-weight="700" fill="#2b9348">✨ TEPI SELAMAT TERBENTUK!</text>
+        ` : ''}
+
+        <!-- Top Sharp Rim that lifts off -->
+        <g style="transition: transform 0.8s ease, opacity 0.8s; ${d.cutDone ? 'transform: translate(75px, -55px) rotate(22deg); opacity: 0;' : ''}">
+          <rect x="74" y="62" width="112" height="26" fill="#ced4da" stroke="#495057" stroke-width="3.5"/>
+          <ellipse cx="130" cy="62" rx="56" ry="11" fill="#adb5bd" stroke="#495057" stroke-width="3"/>
+        </g>
+
+        ${!d.cutDone ? `
+          <g id="d2-cut-zone" style="cursor:pointer;">
+            <line x1="64" y1="88" x2="196" y2="88" stroke="#ff595e" stroke-width="5" stroke-dasharray="10 7" class="blink-guide"/>
+            <rect x="60" y="68" width="140" height="42" fill="transparent"/>
+            <text x="130" y="45" text-anchor="middle" font-family="Fredoka" font-size="12" font-weight="700" fill="#d90429" class="blink-guide">✂️ IKUT GARIS PEMBENTUKAN</text>
+          </g>
+        ` : ''}
+
+        <g id="d2-scissors" transform="translate(54, 88)" style="opacity:0; pointer-events:none;">
+          <circle cx="-10" cy="-8" r="7" fill="none" stroke="#ff758f" stroke-width="3.5"/>
+          <circle cx="-10" cy="8" r="7" fill="none" stroke="#ff758f" stroke-width="3.5"/>
+          <path d="M-4 -4 L22 5" stroke="#adb5bd" stroke-width="4" stroke-linecap="round"/>
+          <path d="M-4 4 L22 -5" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
+        </g>
+      </svg>
+    `;
+
+    if (!d.cutDone) {
+      dockControls.innerHTML = `<div style="font-size:12px; color:#6c757d; font-weight:700;">Sentuh garisan merah putus-putus pada tin</div>`;
+      const cz = document.getElementById('d2-cut-zone');
+      let running = false;
+      const run = () => {
+        if (running || d.cutDone) return;
+        running = true;
+        const sc = document.getElementById('d2-scissors');
+        sc.style.opacity = '1';
+        let x = 55;
+        const t = setInterval(() => {
+          x += 12;
+          sc.setAttribute('transform', `translate(${x}, 88) rotate(${Math.sin(x * 0.4) * 8})`);
+          if (x % 24 === 0) sfx.playSnip();
+          if (x >= 195) {
+            clearInterval(t);
+            d.cutDone = true;
+            addStars(1);
+            sfx.playPop();
+            showToast('✂️ Tepi tin telah dikemaskan!');
+            renderCurrentScreen();
+          }
+        }, 45);
+      };
+      cz.addEventListener('pointerdown', run);
+      cz.addEventListener('pointermove', run);
+    } else {
+      dockControls.innerHTML = `<button class="action-btn btn-primary" id="d2-s2-next">HIAS TIN ➜</button>`;
+      document.getElementById('d2-s2-next').onclick = () => { sfx.playClick(); state.step = 3; renderCurrentScreen(); };
+    }
+    return;
+  }
+
+  // STEP 3: HIAS TIN
+  if (s === 3) {
+    setMascot('Balut dan hias tin dengan warna pastel, corak ceria dan sticker pilihan kamu!');
+    setInstruction('Pilih warna/corak atau SERET sticker ke atas tin!');
+    const colors = ['#ffd166', '#9bf6ff', '#ffadad', '#cdb4db', '#95d5b2', '#ffd6a5'];
+    const patterns = [
+      { id: 'none', label: 'Polos' },
+      { id: 'stripes', label: 'Jalur' },
+      { id: 'dots', label: 'Bintik' },
+      { id: 'waves', label: 'Ombak' }
+    ];
+    const stickers = ['✏️', '⭐', '🚀', '🌈', '🐱', '🍀'];
+
+    arena.innerHTML = `
+      <svg id="tin-drop-zone" viewBox="0 0 260 260" width="245" height="245">
+        ${getSvgDefs()}
+        <ellipse cx="130" cy="242" rx="64" ry="12" fill="#b08968" opacity="0.45"/>
+        <rect x="74" y="84" width="112" height="154" rx="10" fill="${d.color}" stroke="#495057" stroke-width="3.5"/>
+        ${d.pattern !== 'none' ? `<rect x="74" y="84" width="112" height="154" rx="10" fill="${getPatternOverlay(d.pattern)}"/>` : ''}
+        <ellipse cx="130" cy="84" rx="56" ry="11" fill="#495057" stroke="#ffd166" stroke-width="3.5"/>
+        ${d.stickers.map(st => `<text x="${st.x}" y="${st.y}" font-size="26" text-anchor="middle" dominant-baseline="central">${st.emoji}</text>`).join('')}
+      </svg>
+    `;
+
+    dockControls.innerHTML = `
+      <div class="palette-row">
+        ${colors.map(c => `<button class="swatch-btn ${d.color === c ? 'active' : ''}" style="background:${c}" data-col="${c}"></button>`).join('')}
+      </div>
+      <div class="palette-row">
+        ${patterns.map(p => `<button class="pattern-btn ${d.pattern === p.id ? 'active' : ''}" data-pat="${p.id}">${p.label}</button>`).join('')}
+      </div>
+      <div class="palette-row">
+        ${stickers.map(st => `<div class="sticker-chip" data-emoji="${st}">${st}</div>`).join('')}
+        <button class="action-btn btn-primary" style="padding:7px 14px; font-size:13px;" id="d2-s3-next">SIAP HIAS ➜</button>
+      </div>
+    `;
+
+    document.querySelectorAll('.swatch-btn').forEach(b => b.onclick = () => { sfx.playClick(); d.color = b.dataset.col; renderCurrentScreen(); });
+    document.querySelectorAll('.pattern-btn').forEach(b => b.onclick = () => { sfx.playClick(); d.pattern = b.dataset.pat; renderCurrentScreen(); });
+
+    const tinSvg = document.getElementById('tin-drop-zone');
+    document.querySelectorAll('.sticker-chip').forEach(chip => {
+      makeDraggable({
+        element: chip,
+        payload: chip.dataset.emoji,
+        renderGhostHTML: (em) => `<div style="font-size:34px;">${em}</div>`,
+        onDropCheck: (cx, cy, em) => {
+          if (isInsideRect(cx, cy, tinSvg, -10)) {
+            const r = tinSvg.getBoundingClientRect();
+            const svgX = Math.max(92, Math.min(168, ((cx - r.left) / r.width) * 260));
+            const svgY = Math.max(110, Math.min(220, ((cy - r.top) / r.height) * 260));
+            d.stickers.push({ emoji: em, x: svgX, y: svgY });
+            sfx.playPop();
+            renderCurrentScreen();
+            return true;
+          }
+          return false;
+        }
+      });
+    });
+
+    document.getElementById('d2-s3-next').onclick = () => { sfx.playClick(); addStars(1); state.step = 4; renderCurrentScreen(); };
+    return;
+  }
+
+  // STEP 4: MASUKKAN ALAT TULIS (DRAG & DROP)
+  if (s === 4) {
+    const items = [
+      { id: 'pencil', label: 'Pensel', emoji: '✏️' },
+      { id: 'pen', label: 'Pen', emoji: '🖊️' },
+      { id: 'ruler', label: 'Pembaris', emoji: '📏' },
+      { id: 'eraser', label: 'Pemadam', emoji: '🧽' }
+    ];
+    const remaining = items.filter(it => !d.placedItems.includes(it.id));
+    const allPlaced = remaining.length === 0;
+
+    setMascot(allPlaced ? 'Semua alat tulis tersusun kemas di dalam bekas tin!' : 'Seret setiap alat tulis di bawah masuk ke dalam bekas tin kamu!');
+    setInstruction(allPlaced ? 'Kemas sekali! Tekan SETERUSNYA.' : 'SERET ALAT TULIS MASUK KE DALAM TIN');
+
+    arena.innerHTML = `
+      <svg id="tin-stationery-target" viewBox="0 0 260 265" width="245" height="250">
+        ${getSvgDefs()}
+        <ellipse cx="130" cy="246" rx="64" ry="12" fill="#b08968" opacity="0.45"/>
+        <!-- Back Rim -->
+        <ellipse cx="130" cy="108" rx="56" ry="11" fill="#343a40"/>
+
+        <!-- Placed Stationery sticking out of tin -->
+        ${d.placedItems.includes('ruler') ? `
+          <g transform="translate(152, 42) rotate(14)">
+            <rect x="-8" y="0" width="16" height="85" rx="3" fill="#ffd166" stroke="#f4a261" stroke-width="2"/>
+            <line x1="-8" y1="15" x2="-2" y2="15" stroke="#5c4033" stroke-width="1.5"/>
+            <line x1="-8" y1="30" x2="-2" y2="30" stroke="#5c4033" stroke-width="1.5"/>
+            <line x1="-8" y1="45" x2="-2" y2="45" stroke="#5c4033" stroke-width="1.5"/>
+          </g>` : ''}
+        ${d.placedItems.includes('pencil') ? `
+          <g transform="translate(102, 40) rotate(-14)">
+            <rect x="-5" y="14" width="10" height="75" fill="#ff9f1c" stroke="#5c4033" stroke-width="2"/>
+            <polygon points="-5,14 5,14 0,0" fill="#ffd6a5" stroke="#5c4033" stroke-width="1.5"/>
+            <polygon points="-2,5 2,5 0,0" fill="#333"/>
+          </g>` : ''}
+        ${d.placedItems.includes('pen') ? `
+          <g transform="translate(128, 36) rotate(3)">
+            <rect x="-5" y="12" width="10" height="78" rx="3" fill="#4361ee" stroke="#1d3557" stroke-width="2"/>
+            <polygon points="-4,12 4,12 0,2" fill="#adb5bd"/>
+          </g>` : ''}
+        ${d.placedItems.includes('eraser') ? `
+          <g transform="translate(88, 76) rotate(-22)">
+            <rect x="-11" y="0" width="22" height="36" rx="4" fill="#ff758f" stroke="#c9184a" stroke-width="2"/>
+            <rect x="-11" y="14" width="22" height="22" rx="3" fill="#ffffff"/>
+          </g>` : ''}
+
+        <!-- Front Tin Body -->
+        <rect x="74" y="108" width="112" height="134" rx="10" fill="${d.color}" stroke="#495057" stroke-width="3.5"/>
+        ${d.pattern !== 'none' ? `<rect x="74" y="108" width="112" height="134" rx="10" fill="${getPatternOverlay(d.pattern)}"/>` : ''}
+        <path d="M74 108 Q130 122 186 108" fill="none" stroke="#ffd166" stroke-width="4"/>
+        ${d.stickers.map(st => `<text x="${st.x}" y="${st.y + 18}" font-size="24" text-anchor="middle">${st.emoji}</text>`).join('')}
+
+        ${!allPlaced ? `
+          <ellipse cx="130" cy="84" rx="52" ry="24" fill="#ffd166" opacity="0.35" stroke="#f4a261" stroke-width="3" stroke-dasharray="7 5" class="blink-guide"/>
+        ` : ''}
+      </svg>
+    `;
+
+    if (!allPlaced) {
+      dockControls.innerHTML = `
+        <div class="palette-row">
+          ${remaining.map(it => `
+            <div class="sticker-chip blink-guide" style="width:68px; height:52px; flex-direction:column; font-size:20px;" data-item="${it.id}">
+              <span>${it.emoji}</span>
+              <span style="font-size:10px; font-weight:700;">${it.label}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      const targetSvg = document.getElementById('tin-stationery-target');
+      document.querySelectorAll('[data-item]').forEach(chip => {
+        makeDraggable({
+          element: chip,
+          payload: chip.dataset.item,
+          renderGhostHTML: () => chip.innerHTML,
+          onDropCheck: (cx, cy, itemId) => {
+            if (isInsideRect(cx, cy, targetSvg, 10)) {
+              d.placedItems.push(itemId);
+              sfx.playPop();
+              showToast('✨ Alat tulis dimasukkan!');
+              renderCurrentScreen();
+              return true;
+            }
+            return false;
+          }
+        });
+      });
+    } else {
+      dockControls.innerHTML = `<button class="action-btn btn-primary" id="d2-s4-next">HASIL AKHIR 🏆</button>`;
+      document.getElementById('d2-s4-next').onclick = () => { sfx.playClick(); addStars(2); state.step = 5; renderCurrentScreen(); };
+    }
+    return;
+  }
+
+  // STEP 5: HASIL AKHIR TIN
+  if (s === 5) {
+    state.completedDoors[2] = true;
+    setProgress(100);
+    sfx.playFanfare();
+    setMascot('Hebat! Tin terpakai kini menjadi bekas alat tulis yang berguna dan ceria.');
+    setInstruction('Kraf Pintu 2 Selesai! Tekan SETERUSNYA untuk kembali ke 4 pintu.');
+
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 265" width="245" height="250" class="pulse-guide">
+        ${getSvgDefs()}
+        <ellipse cx="130" cy="246" rx="64" ry="12" fill="#b08968" opacity="0.45"/>
+        <ellipse cx="130" cy="108" rx="56" ry="11" fill="#343a40"/>
+        <g transform="translate(152, 42) rotate(14)"><rect x="-8" y="0" width="16" height="85" rx="3" fill="#ffd166" stroke="#f4a261" stroke-width="2"/></g>
+        <g transform="translate(102, 40) rotate(-14)"><rect x="-5" y="14" width="10" height="75" fill="#ff9f1c" stroke="#5c4033" stroke-width="2"/><polygon points="-5,14 5,14 0,0" fill="#ffd6a5"/></g>
+        <g transform="translate(128, 36) rotate(3)"><rect x="-5" y="12" width="10" height="78" rx="3" fill="#4361ee" stroke="#1d3557" stroke-width="2"/></g>
+        <g transform="translate(88, 76) rotate(-22)"><rect x="-11" y="0" width="22" height="36" rx="4" fill="#ff758f" stroke="#c9184a" stroke-width="2"/></g>
+        <rect x="74" y="108" width="112" height="134" rx="10" fill="${d.color}" stroke="#495057" stroke-width="3.5"/>
+        ${d.pattern !== 'none' ? `<rect x="74" y="108" width="112" height="134" rx="10" fill="${getPatternOverlay(d.pattern)}"/>` : ''}
+        ${d.stickers.map(st => `<text x="${st.x}" y="${st.y + 18}" font-size="24" text-anchor="middle">${st.emoji}</text>`).join('')}
+        <text x="52" y="48" font-size="24">⭐</text>
+        <text x="208" y="48" font-size="24">⭐</text>
+      </svg>
+    `;
+    dockControls.innerHTML = `
+      <button class="action-btn btn-secondary" id="d2-replay">🔄 MAIN SEMULA</button>
+      <button class="action-btn btn-primary" id="d2-done">SETERUSNYA 🏠</button>
+    `;
+    document.getElementById('d2-replay').onclick = () => { sfx.playClick(); startDoor(2); };
+    document.getElementById('d2-done').onclick = () => { sfx.playClick(); goHome(); };
+  }
+}
+
+/* ==========================================================================
+   8. PINTU 3 — KOTAK KADBOD MENJADI ORGANIZER MEJA (6 LANGKAH)
+   ========================================================================== */
+function renderDoor3() {
+  const s = state.step;
+  const d = state.d3;
+  setProgress(((s - 1) / 5) * 100);
+
+  // STEP 1: KENALI KOTAK KADBOD
+  if (s === 1) {
+    setMascot('Kotak kadbod terpakai boleh diubah suai menjadi organizer meja yang kemas untuk menyimpan buku nota dan alat tulis!');
+    setInstruction('Tekan MULA untuk membentuk kotak kadbod!');
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 265" width="245" height="250" class="pulse-guide">
+        <ellipse cx="130" cy="244" rx="82" ry="13" fill="#b08968" opacity="0.45"/>
+        <rect x="46" y="72" width="168" height="168" rx="8" fill="#ddb892" stroke="#7f5539" stroke-width="3.5"/>
+        <line x1="46" y1="112" x2="214" y2="112" stroke="#7f5539" stroke-width="3"/>
+        <line x1="130" y1="72" x2="130" y2="112" stroke="#7f5539" stroke-width="3"/>
+        <text x="130" y="176" text-anchor="middle" font-family="Fredoka" font-size="16" font-weight="700" fill="#7f5539">KOTAK KADBOD</text>
+      </svg>
+    `;
+    dockControls.innerHTML = `<button class="action-btn btn-primary" id="d3-s1">🚀 MULA KRAF</button>`;
+    document.getElementById('d3-s1').onclick = () => { sfx.playClick(); state.step = 2; renderCurrentScreen(); };
+    return;
+  }
+
+  // STEP 2: MEMBENTUK KOTAK DENGAN GUNTING
+  if (s === 2) {
+    setMascot('Mari potong bahagian atas kotak secara menyerong supaya mudah melihat barang di dalamnya!');
+    setInstruction(d.cutDone ? 'Bentuk organizer sudah siap!' : 'TEKAN PADA GARIS POTONGAN BERKELIP!');
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 265" width="245" height="250">
+        <ellipse cx="130" cy="244" rx="82" ry="13" fill="#b08968" opacity="0.45"/>
+        <!-- Lower Organizer Base -->
+        <path d="M46 122 L214 122 L214 238 Q214 244 206 244 L54 244 Q46 244 46 238 Z"
+              fill="#ddb892" stroke="#7f5539" stroke-width="3.5"/>
+        ${d.cutDone ? `<rect x="46" y="114" width="168" height="12" rx="4" fill="#b08968" stroke="#7f5539" stroke-width="2.5"/>` : ''}
+
+        <!-- Top Flap Cut Off -->
+        <g style="transition: transform 0.8s ease, opacity 0.8s; ${d.cutDone ? 'transform: translate(80px, -60px) rotate(25deg); opacity: 0;' : ''}">
+          <rect x="46" y="66" width="168" height="56" rx="6" fill="#e6ccb2" stroke="#7f5539" stroke-width="3.5"/>
+        </g>
+
+        ${!d.cutDone ? `
+          <g id="d3-cut-zone" style="cursor:pointer;">
+            <line x1="38" y1="122" x2="222" y2="122" stroke="#ff595e" stroke-width="5" stroke-dasharray="10 7" class="blink-guide"/>
+            <rect x="35" y="100" width="190" height="44" fill="transparent"/>
+            <text x="130" y="52" text-anchor="middle" font-family="Fredoka" font-size="12" font-weight="700" fill="#d90429" class="blink-guide">✂️ TEKAN PADA GARIS</text>
+          </g>
+        ` : ''}
+
+        <g id="d3-scissors" transform="translate(36, 122)" style="opacity:0; pointer-events:none;">
+          <circle cx="-10" cy="-8" r="7" fill="none" stroke="#ff758f" stroke-width="3.5"/>
+          <circle cx="-10" cy="8" r="7" fill="none" stroke="#ff758f" stroke-width="3.5"/>
+          <path d="M-4 -4 L22 5" stroke="#adb5bd" stroke-width="4" stroke-linecap="round"/>
+          <path d="M-4 4 L22 -5" stroke="#6c757d" stroke-width="4" stroke-linecap="round"/>
+        </g>
+      </svg>
+    `;
+
+    if (!d.cutDone) {
+      dockControls.innerHTML = `<div style="font-size:12px; color:#6c757d; font-weight:700;">Sentuh garisan merah putus-putus pada kotak</div>`;
+      const cz = document.getElementById('d3-cut-zone');
+      let running = false;
+      const run = () => {
+        if (running || d.cutDone) return;
+        running = true;
+        const sc = document.getElementById('d3-scissors');
+        sc.style.opacity = '1';
+        let x = 36;
+        const t = setInterval(() => {
+          x += 14;
+          sc.setAttribute('transform', `translate(${x}, 122) rotate(${Math.sin(x * 0.4) * 8})`);
+          if (x % 28 === 0) sfx.playSnip();
+          if (x >= 220) {
+            clearInterval(t);
+            d.cutDone = true;
+            addStars(1);
+            sfx.playPop();
+            showToast('✂️ Kotak berjaya dibentuk!');
+            renderCurrentScreen();
+          }
+        }, 45);
+      };
+      cz.addEventListener('pointerdown', run);
+      cz.addEventListener('pointermove', run);
+    } else {
+      dockControls.innerHTML = `<button class="action-btn btn-primary" id="d3-s2-next">PASANG PEMBAHAGI ➜</button>`;
+      document.getElementById('d3-s2-next').onclick = () => { sfx.playClick(); state.step = 3; renderCurrentScreen(); };
+    }
+    return;
+  }
+
+  // STEP 3: MEMASANG PEMBAHAGI (DRAG 2 DIVIDERS)
+  if (s === 3) {
+    const doneDiv = d.dividersPlaced >= 2;
+    setMascot(doneDiv ? 'Hebat! Organizer kamu kini mempunyai 3 ruang yang kemas.' : 'Seret kepingan pembahagi kadbod masuk ke slot garisan putus-putus!');
+    setInstruction(doneDiv ? 'Semua pembahagi dipasang!' : `SERET PEMBAHAGI KE DALAM KOTAK (${d.dividersPlaced}/2)`);
+
+    arena.innerHTML = `
+      <svg id="org-div-target" viewBox="0 0 260 265" width="245" height="250">
+        <ellipse cx="130" cy="244" rx="82" ry="13" fill="#b08968" opacity="0.45"/>
+        <!-- Back & Base of Organizer -->
+        <rect x="46" y="96" width="168" height="32" rx="4" fill="#b08968" stroke="#7f5539" stroke-width="3"/>
+        <path d="M46 122 L214 122 L214 238 Q214 244 206 244 L54 244 Q46 244 46 238 Z"
+              fill="#ddb892" stroke="#7f5539" stroke-width="3.5"/>
+
+        <!-- Slot 1 -->
+        ${d.dividersPlaced >= 1 ? `
+          <rect x="98" y="98" width="8" height="144" fill="#9c6644" stroke="#582f0e" stroke-width="2"/>
+        ` : `
+          <rect x="96" y="98" width="12" height="142" fill="#ffd166" opacity="0.45" stroke="#f4a261" stroke-width="2.5" stroke-dasharray="6 4" class="blink-guide"/>
+        `}
+
+        <!-- Slot 2 -->
+        ${d.dividersPlaced >= 2 ? `
+          <rect x="154" y="98" width="8" height="144" fill="#9c6644" stroke="#582f0e" stroke-width="2"/>
+        ` : `
+          <rect x="152" y="98" width="12" height="142" fill="#ffd166" opacity="0.45" stroke="#f4a261" stroke-width="2.5" stroke-dasharray="6 4" class="blink-guide"/>
+        `}
+      </svg>
+    `;
+
+    if (!doneDiv) {
+      dockControls.innerHTML = `
+        <div class="palette-row">
+          <div class="sticker-chip blink-guide" id="div-piece" style="width:120px; height:48px; gap:6px; font-size:13px; font-weight:700;">
+            🪵 Pembahagi (${2 - d.dividersPlaced})
+          </div>
+        </div>
+      `;
+      const targetEl = document.getElementById('org-div-target');
+      makeDraggable({
+        element: document.getElementById('div-piece'),
+        payload: 'div',
+        renderGhostHTML: () => `<div style="width:16px;height:110px;background:#9c6644;border:3px solid #fff;border-radius:4px;"></div>`,
+        onDropCheck: (cx, cy) => {
+          if (isInsideRect(cx, cy, targetEl, 10)) {
+            d.dividersPlaced++;
+            sfx.playPop();
+            showToast(`🪵 Pembahagi ${d.dividersPlaced} dipasang!`);
+            renderCurrentScreen();
+            return true;
+          }
+          return false;
+        }
+      });
+    } else {
+      dockControls.innerHTML = `<button class="action-btn btn-primary" id="d3-s3-next">HIAS ORGANIZER ➜</button>`;
+      document.getElementById('d3-s3-next').onclick = () => { sfx.playClick(); addStars(1); state.step = 4; renderCurrentScreen(); };
+    }
+    return;
+  }
+
+  // STEP 4: HIAS ORGANIZER
+  if (s === 4) {
+    setMascot('Hiaskan organizer meja kamu dengan warna kegemaran, corak dan sticker!');
+    setInstruction('Pilih warna/corak atau SERET sticker ke organizer!');
+    const colors = ['#ffadad', '#9bf6ff', '#ffd166', '#cdb4db', '#95d5b2', '#ffd6a5'];
+    const patterns = [
+      { id: 'none', label: 'Polos' },
+      { id: 'dots', label: 'Bintik' },
+      { id: 'stripes', label: 'Jalur' },
+      { id: 'waves', label: 'Ombak' }
+    ];
+    const stickers = ['📚', '⭐', '🌸', '🐼', '🎨', '💖'];
+
+    arena.innerHTML = `
+      <svg id="org-deco-target" viewBox="0 0 260 265" width="245" height="250">
+        ${getSvgDefs()}
+        <ellipse cx="130" cy="244" rx="82" ry="13" fill="#b08968" opacity="0.45"/>
+        <rect x="46" y="96" width="168" height="32" rx="4" fill="#b08968" stroke="#7f5539" stroke-width="3"/>
+        <path d="M46 122 L214 122 L214 238 Q214 244 206 244 L54 244 Q46 244 46 238 Z"
+              fill="${d.color}" stroke="#7f5539" stroke-width="3.5"/>
+        ${d.pattern !== 'none' ? `<path d="M46 122 L214 122 L214 238 Q214 244 206 244 L54 244 Q46 244 46 238 Z" fill="${getPatternOverlay(d.pattern)}"/>` : ''}
+        <rect x="98" y="98" width="8" height="144" fill="#9c6644" stroke="#582f0e" stroke-width="2"/>
+        <rect x="154" y="98" width="8" height="144" fill="#9c6644" stroke="#582f0e" stroke-width="2"/>
+        ${d.stickers.map(st => `<text x="${st.x}" y="${st.y}" font-size="24" text-anchor="middle" dominant-baseline="central">${st.emoji}</text>`).join('')}
+      </svg>
+    `;
+
+    dockControls.innerHTML = `
+      <div class="palette-row">
+        ${colors.map(c => `<button class="swatch-btn ${d.color === c ? 'active' : ''}" style="background:${c}" data-col="${c}"></button>`).join('')}
+      </div>
+      <div class="palette-row">
+        ${patterns.map(p => `<button class="pattern-btn ${d.pattern === p.id ? 'active' : ''}" data-pat="${p.id}">${p.label}</button>`).join('')}
+      </div>
+      <div class="palette-row">
+        ${stickers.map(st => `<div class="sticker-chip" data-emoji="${st}">${st}</div>`).join('')}
+        <button class="action-btn btn-primary" style="padding:7px 14px; font-size:13px;" id="d3-s4-next">SIAP HIAS ➜</button>
+      </div>
+    `;
+
+    document.querySelectorAll('.swatch-btn').forEach(b => b.onclick = () => { sfx.playClick(); d.color = b.dataset.col; renderCurrentScreen(); });
+    document.querySelectorAll('.pattern-btn').forEach(b => b.onclick = () => { sfx.playClick(); d.pattern = b.dataset.pat; renderCurrentScreen(); });
+
+    const targetSvg = document.getElementById('org-deco-target');
+    document.querySelectorAll('.sticker-chip').forEach(chip => {
+      makeDraggable({
+        element: chip,
+        payload: chip.dataset.emoji,
+        renderGhostHTML: (em) => `<div style="font-size:34px;">${em}</div>`,
+        onDropCheck: (cx, cy, em) => {
+          if (isInsideRect(cx, cy, targetSvg, -10)) {
+            const r = targetSvg.getBoundingClientRect();
+            const svgX = Math.max(64, Math.min(196, ((cx - r.left) / r.width) * 260));
+            const svgY = Math.max(138, Math.min(226, ((cy - r.top) / r.height) * 260));
+            d.stickers.push({ emoji: em, x: svgX, y: svgY });
+            sfx.playPop();
+            renderCurrentScreen();
+            return true;
+          }
+          return false;
+        }
+      });
+    });
+
+    document.getElementById('d3-s4-next').onclick = () => { sfx.playClick(); addStars(1); state.step = 5; renderCurrentScreen(); };
+    return;
+  }
+
+  // STEP 5: SUSUN BARANG MEJA
+  if (s === 5) {
+    const items = [
+      { id: 'book', label: 'Buku Nota', emoji: '📒' },
+      { id: 'pencil', label: 'Pensel', emoji: '✏️' },
+      { id: 'scissors', label: 'Gunting', emoji: '✂️' },
+      { id: 'eraser', label: 'Pemadam', emoji: '🧽' }
+    ];
+    const remaining = items.filter(it => !d.placedItems.includes(it.id));
+    const allPlaced = remaining.length === 0;
+
+    setMascot(allPlaced ? 'Meja belajar pasti nampak sangat kemas dengan organizer ini!' : 'Seret barang meja di bawah ke dalam ruang-ruang organizer!');
+    setInstruction(allPlaced ? 'Semua barang tersusun kemas!' : 'SERET BARANG KE RUANG ORGANIZER');
+
+    arena.innerHTML = `
+      <svg id="org-items-target" viewBox="0 0 260 265" width="245" height="250">
+        ${getSvgDefs()}
+        <ellipse cx="130" cy="244" rx="82" ry="13" fill="#b08968" opacity="0.45"/>
+        <rect x="46" y="96" width="168" height="32" rx="4" fill="#b08968" stroke="#7f5539" stroke-width="3"/>
+
+        <!-- Items inside slots -->
+        ${d.placedItems.includes('book') ? `
+          <rect x="54" y="64" width="38" height="68" rx="4" fill="#ffe66d" stroke="#f4a261" stroke-width="2.5"/>
+          <line x1="62" y1="64" x2="62" y2="132" stroke="#f4a261" stroke-width="3"/>
+        ` : ''}
+        ${d.placedItems.includes('pencil') ? `
+          <g transform="translate(122, 54) rotate(-8)">
+            <rect x="-5" y="12" width="10" height="72" fill="#ff9f1c" stroke="#5c4033" stroke-width="2"/>
+            <polygon points="-5,12 5,12 0,0" fill="#ffd6a5"/>
+          </g>
+        ` : ''}
+        ${d.placedItems.includes('scissors') ? `
+          <g transform="translate(182, 62) rotate(10)">
+            <circle cx="-7" cy="0" r="8" fill="none" stroke="#ff595e" stroke-width="3.5"/>
+            <circle cx="7" cy="0" r="8" fill="none" stroke="#ff595e" stroke-width="3.5"/>
+            <rect x="-4" y="8" width="8" height="58" rx="3" fill="#adb5bd"/>
+          </g>
+        ` : ''}
+        ${d.placedItems.includes('eraser') ? `
+          <rect x="172" y="94" width="28" height="34" rx="4" fill="#90e0ef" stroke="#0077b6" stroke-width="2"/>
+        ` : ''}
+
+        <!-- Front Organizer Wall -->
+        <path d="M46 122 L214 122 L214 238 Q214 244 206 244 L54 244 Q46 244 46 238 Z"
+              fill="${d.color}" stroke="#7f5539" stroke-width="3.5"/>
+        ${d.pattern !== 'none' ? `<path d="M46 122 L214 122 L214 238 Q214 244 206 244 L54 244 Q46 244 46 238 Z" fill="${getPatternOverlay(d.pattern)}"/>` : ''}
+        <rect x="98" y="122" width="8" height="120" fill="#9c6644" stroke="#582f0e" stroke-width="2"/>
+        <rect x="154" y="122" width="8" height="120" fill="#9c6644" stroke="#582f0e" stroke-width="2"/>
+        ${d.stickers.map(st => `<text x="${st.x}" y="${st.y}" font-size="24" text-anchor="middle">${st.emoji}</text>`).join('')}
+
+        ${!allPlaced ? `
+          <rect x="50" y="72" width="160" height="46" rx="12" fill="#ffd166" opacity="0.32" stroke="#f4a261" stroke-width="3" stroke-dasharray="7 5" class="blink-guide"/>
+        ` : ''}
+      </svg>
+    `;
+
+    if (!allPlaced) {
+      dockControls.innerHTML = `
+        <div class="palette-row">
+          ${remaining.map(it => `
+            <div class="sticker-chip blink-guide" style="width:72px; height:52px; flex-direction:column; font-size:20px;" data-item="${it.id}">
+              <span>${it.emoji}</span>
+              <span style="font-size:10px; font-weight:700;">${it.label}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      const targetSvg = document.getElementById('org-items-target');
+      document.querySelectorAll('[data-item]').forEach(chip => {
+        makeDraggable({
+          element: chip,
+          payload: chip.dataset.item,
+          renderGhostHTML: () => chip.innerHTML,
+          onDropCheck: (cx, cy, itemId) => {
+            if (isInsideRect(cx, cy, targetSvg, 10)) {
+              d.placedItems.push(itemId);
+              sfx.playPop();
+              showToast('✨ Barang disusun kemas!');
+              renderCurrentScreen();
+              return true;
+            }
+            return false;
+          }
+        });
+      });
+    } else {
+      dockControls.innerHTML = `<button class="action-btn btn-primary" id="d3-s5-next">HASIL AKHIR 🏆</button>`;
+      document.getElementById('d3-s5-next').onclick = () => { sfx.playClick(); addStars(2); state.step = 6; renderCurrentScreen(); };
+    }
+    return;
+  }
+
+  // STEP 6: HASIL AKHIR ORGANIZER
+  if (s === 6) {
+    state.completedDoors[3] = true;
+    setProgress(100);
+    sfx.playFanfare();
+    setMascot('Tahniah! Kotak kadbod terpakai kini menjadi organizer yang membantu meja kamu lebih kemas.');
+    setInstruction('Kraf Pintu 3 Selesai! Tekan SETERUSNYA untuk kembali ke 4 pintu.');
+
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 265" width="245" height="250" class="pulse-guide">
+        ${getSvgDefs()}
+        <ellipse cx="130" cy="244" rx="82" ry="13" fill="#b08968" opacity="0.45"/>
+        <rect x="46" y="96" width="168" height="32" rx="4" fill="#b08968" stroke="#7f5539" stroke-width="3"/>
+        <rect x="54" y="64" width="38" height="68" rx="4" fill="#ffe66d" stroke="#f4a261" stroke-width="2.5"/>
+        <g transform="translate(122, 54) rotate(-8)"><rect x="-5" y="12" width="10" height="72" fill="#ff9f1c" stroke="#5c4033" stroke-width="2"/><polygon points="-5,12 5,12 0,0" fill="#ffd6a5"/></g>
+        <g transform="translate(182, 62) rotate(10)"><circle cx="-7" cy="0" r="8" fill="none" stroke="#ff595e" stroke-width="3.5"/><circle cx="7" cy="0" r="8" fill="none" stroke="#ff595e" stroke-width="3.5"/><rect x="-4" y="8" width="8" height="58" rx="3" fill="#adb5bd"/></g>
+        <path d="M46 122 L214 122 L214 238 Q214 244 206 244 L54 244 Q46 244 46 238 Z" fill="${d.color}" stroke="#7f5539" stroke-width="3.5"/>
+        ${d.pattern !== 'none' ? `<path d="M46 122 L214 122 L214 238 Q214 244 206 244 L54 244 Q46 244 46 238 Z" fill="${getPatternOverlay(d.pattern)}"/>` : ''}
+        <rect x="98" y="122" width="8" height="120" fill="#9c6644" stroke="#582f0e" stroke-width="2"/>
+        <rect x="154" y="122" width="8" height="120" fill="#9c6644" stroke="#582f0e" stroke-width="2"/>
+        ${d.stickers.map(st => `<text x="${st.x}" y="${st.y}" font-size="24" text-anchor="middle">${st.emoji}</text>`).join('')}
+        <text x="44" y="45" font-size="24">⭐</text>
+        <text x="216" y="45" font-size="24">⭐</text>
+      </svg>
+    `;
+    dockControls.innerHTML = `
+      <button class="action-btn btn-secondary" id="d3-replay">🔄 MAIN SEMULA</button>
+      <button class="action-btn btn-primary" id="d3-done">SETERUSNYA 🏠</button>
+    `;
+    document.getElementById('d3-replay').onclick = () => { sfx.playClick(); startDoor(3); };
+    document.getElementById('d3-done').onclick = () => { sfx.playClick(); goHome(); };
+  }
+}
+
+/* ==========================================================================
+   9. PINTU 4 — KERTAS TERPAKAI MENJADI BUNGA HIASAN (7 LANGKAH)
+   ========================================================================== */
+function renderDoor4() {
+  const s = state.step;
+  const d = state.d4;
+  setProgress(((s - 1) / 6) * 100);
+
+  // STEP 1: KENALI KERTAS TERPAKAI
+  if (s === 1) {
+    setMascot('Kertas warna atau kertas majalah terpakai tidak perlu dibuang! Kita boleh gunting dan cantumkannya menjadi bunga hiasan yang cantik.');
+    setInstruction('Tekan MULA untuk membuat bunga kertas!');
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 265" width="245" height="250" class="pulse-guide">
+        <ellipse cx="130" cy="244" rx="74" ry="12" fill="#b08968" opacity="0.45"/>
+        <rect x="64" y="42" width="132" height="184" rx="10" fill="#fffdf7" stroke="#adb5bd" stroke-width="3.5" transform="rotate(-4 130 134)"/>
+        <line x1="86" y1="84" x2="174" y2="78" stroke="#ced4da" stroke-width="4" stroke-linecap="round"/>
+        <line x1="86" y1="112" x2="174" y2="106" stroke="#ced4da" stroke-width="4" stroke-linecap="round"/>
+        <line x1="86" y1="140" x2="152" y2="136" stroke="#ced4da" stroke-width="4" stroke-linecap="round"/>
+        <text x="130" y="185" text-anchor="middle" font-family="Fredoka" font-size="14" font-weight="700" fill="#6c757d">KERTAS TERPAKAI</text>
+      </svg>
+    `;
+    dockControls.innerHTML = `<button class="action-btn btn-primary" id="d4-s1">🚀 MULA KRAF</button>`;
+    document.getElementById('d4-s1').onclick = () => { sfx.playClick(); state.step = 2; renderCurrentScreen(); };
+    return;
+  }
+
+  // STEP 2: PILIH WARNA KERTAS
+  if (s === 2) {
+    setMascot('Pilih warna kertas kraf yang kamu suka untuk dijadikan kelopak bunga!');
+    setInstruction('Ketik warna kertas pilihan kamu di bawah!');
+    const colors = [
+      { hex: '#ff758f', name: 'Merah Jambu' },
+      { hex: '#ffb703', name: 'Kuning Cerah' },
+      { hex: '#9d4edd', name: 'Lavender' },
+      { hex: '#48cae4', name: 'Biru Langit' },
+      { hex: '#ff595e', name: 'Merah Mawar' }
+    ];
+
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 265" width="245" height="250">
+        <ellipse cx="130" cy="244" rx="74" ry="12" fill="#b08968" opacity="0.45"/>
+        <rect x="64" y="42" width="132" height="184" rx="12" fill="${d.paperColor}" stroke="#ffffff" stroke-width="4"/>
+        <text x="130" y="138" text-anchor="middle" font-family="Fredoka" font-size="16" font-weight="700" fill="#ffffff">KERTAS KRAF</text>
+      </svg>
+    `;
+
+    dockControls.innerHTML = `
+      <div class="palette-row">
+        ${colors.map(c => `<button class="swatch-btn ${d.paperColor === c.hex ? 'active' : ''}" style="background:${c.hex}" data-col="${c.hex}" title="${c.name}"></button>`).join('')}
+      </div>
+      <button class="action-btn btn-primary" style="padding:9px 20px; font-size:14px;" id="d4-s2-next">GUNTING KELOPAK ➜</button>
+    `;
+
+    document.querySelectorAll('.swatch-btn').forEach(b => b.onclick = () => { sfx.playClick(); d.paperColor = b.dataset.col; renderCurrentScreen(); });
+    document.getElementById('d4-s2-next').onclick = () => { sfx.playClick(); state.step = 3; renderCurrentScreen(); };
+    return;
+  }
+
+  // STEP 3: MEMBENTUK KELOPAK (GUNTING OUTLINE)
+  if (s === 3) {
+    const doneCut = d.petalsCut >= 5;
+    setMascot(doneCut ? 'Syabas! 5 kelopak bunga kertas telah siap digunting.' : 'Tekan pada lakaran kelopak putus-putus untuk menggunting 5 kelopak bunga!');
+    setInstruction(doneCut ? '5 Kelopak terhasil!' : `TEKAN LAKARAN KELOPAK UNTUK GUNTING (${d.petalsCut}/5)`);
+
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 265" width="245" height="250">
+        <rect x="34" y="28" width="192" height="156" rx="12" fill="${d.paperColor}" stroke="#ffffff" stroke-width="3.5"/>
+        ${!doneCut ? `
+          <g id="petal-outline-target" style="cursor:pointer;" class="blink-guide">
+            <path d="M130 48 C158 48, 172 95, 130 156 C88 95, 102 48, 130 48 Z"
+                  fill="rgba(255,255,255,0.28)" stroke="#ffffff" stroke-width="4" stroke-dasharray="8 6"/>
+            <text x="130" y="106" text-anchor="middle" font-family="Fredoka" font-size="13" font-weight="700" fill="#ffffff">✂️ GUNTING</text>
+          </g>
+        ` : `<text x="130" y="110" text-anchor="middle" font-family="Fredoka" font-size="16" font-weight="700" fill="#ffffff">✨ 5 KELOPAK SIAP!</text>`}
+
+        <!-- Tray of cut petals -->
+        <g transform="translate(0, 215)">
+          ${Array.from({ length: d.petalsCut }).map((_, i) => `
+            <path d="M${48 + i * 41} -16 C${58 + i * 41} -16, ${63 + i * 41} 4, ${48 + i * 41} 24 C${33 + i * 41} 4, ${38 + i * 41} -16, ${48 + i * 41} -16 Z"
+                  fill="${d.paperColor}" stroke="#ffffff" stroke-width="2.5"/>
+          `).join('')}
+        </g>
+      </svg>
+    `;
+
+    if (!doneCut) {
+      dockControls.innerHTML = `<div style="font-size:12px; color:#6c757d; font-weight:700;">Ketik lakaran kelopak di atas kertas untuk menggunting</div>`;
+      document.getElementById('petal-outline-target').onclick = () => {
+        sfx.playSnip();
+        d.petalsCut++;
+        if (d.petalsCut === 5) {
+          addStars(1);
+          sfx.playPop();
+          showToast('🌸 Semua 5 kelopak terhasil!');
+        }
+        renderCurrentScreen();
+      };
+    } else {
+      dockControls.innerHTML = `<button class="action-btn btn-primary" id="d4-s3-next">SUSUN KELOPAK ➜</button>`;
+      document.getElementById('d4-s3-next').onclick = () => { sfx.playClick(); state.step = 4; renderCurrentScreen(); };
+    }
+    return;
+  }
+
+  // STEP 4: SUSUN KELOPAK (DRAG PETALS TO CENTER BASE)
+  if (s === 4) {
+    const doneAsm = d.petalsAssembled >= 5;
+    setMascot(doneAsm ? 'Cantiknya susunan kelopak bunga kamu!' : 'Seret kelopak kertas satu demi satu ke tapak bunga di tengah!');
+    setInstruction(doneAsm ? 'Semua kelopak bercantum!' : `SERET KELOPAK KE TAPAK BUNGA (${d.petalsAssembled}/5)`);
+
+    const angles = [0, 72, 144, 216, 288];
+    arena.innerHTML = `
+      <svg id="flower-base-target" viewBox="0 0 260 265" width="245" height="250">
+        <!-- Guide Ring -->
+        <circle cx="130" cy="130" r="56" fill="rgba(255,230,109,0.28)" stroke="#f4a261" stroke-width="3" stroke-dasharray="8 6" class="${!doneAsm ? 'blink-guide' : ''}"/>
+
+        <!-- Assembled Petals -->
+        <g transform="translate(130, 130)">
+          ${angles.slice(0, d.petalsAssembled).map(ang => `
+            <path d="M0 -64 C22 -64, 28 -25, 0 0 C-28 -25, -22 -64, 0 -64 Z"
+                  fill="${d.paperColor}" stroke="#ffffff" stroke-width="2.5" transform="rotate(${ang})"/>
+          `).join('')}
+          <circle cx="0" cy="0" r="16" fill="#e9ecef" stroke="#adb5bd" stroke-width="2"/>
+        </g>
+      </svg>
+    `;
+
+    if (!doneAsm) {
+      dockControls.innerHTML = `
+        <div class="palette-row">
+          ${Array.from({ length: 5 - d.petalsAssembled }).map((_, idx) => `
+            <div class="sticker-chip blink-guide" data-petal="${idx}">🌸</div>
+          `).join('')}
+        </div>
+      `;
+      const targetSvg = document.getElementById('flower-base-target');
+      document.querySelectorAll('[data-petal]').forEach(chip => {
+        makeDraggable({
+          element: chip,
+          payload: 'petal',
+          renderGhostHTML: () => `
+            <svg width="42" height="54" viewBox="-22 -64 44 64">
+              <path d="M0 -64 C22 -64, 28 -25, 0 0 C-28 -25, -22 -64, 0 -64 Z" fill="${d.paperColor}" stroke="#fff" stroke-width="3"/>
+            </svg>`,
+          onDropCheck: (cx, cy) => {
+            if (isInsideRect(cx, cy, targetSvg, 5)) {
+              d.petalsAssembled++;
+              sfx.playPop();
+              renderCurrentScreen();
+              return true;
+            }
+            return false;
+          }
+        });
+      });
+    } else {
+      dockControls.innerHTML = `<button class="action-btn btn-primary" id="d4-s4-next">CANTUM BUNGA ➜</button>`;
+      document.getElementById('d4-s4-next').onclick = () => { sfx.playClick(); addStars(1); state.step = 5; renderCurrentScreen(); };
+    }
+    return;
+  }
+
+  // STEP 5: CANTUM PUTIK TENGAH, BATANG & DAUN
+  if (s === 5) {
+    const allParts = d.centerPlaced && d.stemPlaced && d.leafPlaced;
+    setMascot(allParts ? 'Bunga kertas kamu sudah lengkap dengan putik, batang dan daun!' : 'Seret putik tengah, batang hijau dan daun untuk mencantumkan bunga!');
+    setInstruction(allParts ? 'Semua bahagian dicantum!' : 'SERET BAHAGIAN BUNGA KE TAPAK');
+
+    const angles = [0, 72, 144, 216, 288];
+    arena.innerHTML = `
+      <svg id="flower-parts-target" viewBox="0 0 260 265" width="245" height="250">
+        <!-- Stem -->
+        ${d.stemPlaced ? `
+          <line x1="130" y1="95" x2="130" y2="245" stroke="#2b9348" stroke-width="8" stroke-linecap="round"/>
+        ` : `
+          <line x1="130" y1="150" x2="130" y2="245" stroke="#95d5b2" stroke-width="6" stroke-dasharray="7 5" class="blink-guide"/>
+        `}
+
+        <!-- Leaf -->
+        ${d.leafPlaced ? `
+          <path d="M130 192 Q168 172 178 194 Q156 212 130 192 Z" fill="#52b788" stroke="#2d6a4f" stroke-width="2.5"/>
+          <path d="M130 205 Q92 185 82 207 Q104 225 130 205 Z" fill="#74c69d" stroke="#2d6a4f" stroke-width="2.5"/>
+        ` : ''}
+
+        <!-- Petals -->
+        <g transform="translate(130, 95)">
+          ${angles.map(ang => `
+            <path d="M0 -56 C20 -56, 25 -22, 0 0 C-25 -22, -20 -56, 0 -56 Z"
+                  fill="${d.paperColor}" stroke="#ffffff" stroke-width="2.5" transform="rotate(${ang})"/>
+          `).join('')}
+          ${d.centerPlaced ? `
+            <circle cx="0" cy="0" r="18" fill="${d.centerColor}" stroke="#f4a261" stroke-width="3"/>
+          ` : `
+            <circle cx="0" cy="0" r="18" fill="#ffffff" stroke="#f4a261" stroke-width="3" stroke-dasharray="5 4" class="blink-guide"/>
+          `}
+        </g>
+      </svg>
+    `;
+
+    if (!allParts) {
+      const parts = [];
+      if (!d.centerPlaced) parts.push({ id: 'center', label: 'Putik', emoji: '🟡' });
+      if (!d.stemPlaced) parts.push({ id: 'stem', label: 'Batang', emoji: '🥢' });
+      if (!d.leafPlaced) parts.push({ id: 'leaf', label: 'Daun', emoji: '🍃' });
+
+      dockControls.innerHTML = `
+        <div class="palette-row">
+          ${parts.map(pt => `
+            <div class="sticker-chip blink-guide" style="width:78px; height:52px; flex-direction:column; font-size:20px;" data-part="${pt.id}">
+              <span>${pt.emoji}</span>
+              <span style="font-size:10px; font-weight:700;">${pt.label}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      const targetSvg = document.getElementById('flower-parts-target');
+      document.querySelectorAll('[data-part]').forEach(chip => {
+        makeDraggable({
+          element: chip,
+          payload: chip.dataset.part,
+          renderGhostHTML: () => chip.innerHTML,
+          onDropCheck: (cx, cy, pid) => {
+            if (isInsideRect(cx, cy, targetSvg, 10)) {
+              if (pid === 'center') d.centerPlaced = true;
+              if (pid === 'stem') d.stemPlaced = true;
+              if (pid === 'leaf') d.leafPlaced = true;
+              sfx.playPop();
+              renderCurrentScreen();
+              return true;
+            }
+            return false;
+          }
+        });
+      });
+    } else {
+      dockControls.innerHTML = `<button class="action-btn btn-primary" id="d4-s5-next">HIAS BUNGA ➜</button>`;
+      document.getElementById('d4-s5-next').onclick = () => { sfx.playClick(); addStars(1); state.step = 6; renderCurrentScreen(); };
+    }
+    return;
+  }
+
+  // STEP 6: HIAS BUNGA KERTAS
+  if (s === 6) {
+    setMascot('Tambahkan sentuhan terakhir dengan memilih warna putik dan menyeret hiasan comel ke bunga kamu!');
+    setInstruction('Pilih warna putik atau SERET hiasan ke bunga!');
+    const centerCols = ['#ffe66d', '#ff9f1c', '#ffffff', '#cdb4db', '#90e0ef'];
+    const decoStickers = ['🦋', '✨', '🐞', '🎀', '💖'];
+    const angles = [0, 72, 144, 216, 288];
+
+    arena.innerHTML = `
+      <svg id="flower-deco-target" viewBox="0 0 260 265" width="245" height="250">
+        <line x1="130" y1="95" x2="130" y2="245" stroke="#2b9348" stroke-width="8" stroke-linecap="round"/>
+        <path d="M130 192 Q168 172 178 194 Q156 212 130 192 Z" fill="#52b788" stroke="#2d6a4f" stroke-width="2.5"/>
+        <path d="M130 205 Q92 185 82 207 Q104 225 130 205 Z" fill="#74c69d" stroke="#2d6a4f" stroke-width="2.5"/>
+        <g transform="translate(130, 95)">
+          ${angles.map(ang => `
+            <path d="M0 -56 C20 -56, 25 -22, 0 0 C-25 -22, -20 -56, 0 -56 Z"
+                  fill="${d.paperColor}" stroke="#ffffff" stroke-width="2.5" transform="rotate(${ang})"/>
+          `).join('')}
+          <circle cx="0" cy="0" r="18" fill="${d.centerColor}" stroke="#f4a261" stroke-width="3"/>
+        </g>
+        ${d.stickers.map(st => `<text x="${st.x}" y="${st.y}" font-size="24" text-anchor="middle" dominant-baseline="central">${st.emoji}</text>`).join('')}
+      </svg>
+    `;
+
+    dockControls.innerHTML = `
+      <div class="palette-row">
+        ${centerCols.map(c => `<button class="swatch-btn ${d.centerColor === c ? 'active' : ''}" style="background:${c}" data-col="${c}"></button>`).join('')}
+      </div>
+      <div class="palette-row">
+        ${decoStickers.map(st => `<div class="sticker-chip" data-emoji="${st}">${st}</div>`).join('')}
+        <button class="action-btn btn-primary" style="padding:7px 14px; font-size:13px;" id="d4-s6-next">HASIL AKHIR 🏆</button>
+      </div>
+    `;
+
+    document.querySelectorAll('.swatch-btn').forEach(b => b.onclick = () => { sfx.playClick(); d.centerColor = b.dataset.col; renderCurrentScreen(); });
+
+    const targetSvg = document.getElementById('flower-deco-target');
+    document.querySelectorAll('.sticker-chip').forEach(chip => {
+      makeDraggable({
+        element: chip,
+        payload: chip.dataset.emoji,
+        renderGhostHTML: (em) => `<div style="font-size:34px;">${em}</div>`,
+        onDropCheck: (cx, cy, em) => {
+          if (isInsideRect(cx, cy, targetSvg, -5)) {
+            const r = targetSvg.getBoundingClientRect();
+            const svgX = Math.max(65, Math.min(195, ((cx - r.left) / r.width) * 260));
+            const svgY = Math.max(40, Math.min(220, ((cy - r.top) / r.height) * 260));
+            d.stickers.push({ emoji: em, x: svgX, y: svgY });
+            sfx.playPop();
+            renderCurrentScreen();
+            return true;
+          }
+          return false;
+        }
+      });
+    });
+
+    document.getElementById('d4-s6-next').onclick = () => { sfx.playClick(); addStars(2); state.step = 7; renderCurrentScreen(); };
+    return;
+  }
+
+  // STEP 7: HASIL AKHIR BUNGA KERTAS
+  if (s === 7) {
+    state.completedDoors[4] = true;
+    setProgress(100);
+    sfx.playFanfare();
+    setMascot('Cantik! Kertas terpakai berjaya dijadikan bunga hiasan yang kreatif.');
+    setInstruction('Kraf Pintu 4 Selesai! Tekan SETERUSNYA untuk kembali ke 4 pintu.');
+
+    const angles = [0, 72, 144, 216, 288];
+    arena.innerHTML = `
+      <svg viewBox="0 0 260 265" width="245" height="250" class="sway-plant">
+        <line x1="130" y1="95" x2="130" y2="245" stroke="#2b9348" stroke-width="8" stroke-linecap="round"/>
+        <path d="M130 192 Q168 172 178 194 Q156 212 130 192 Z" fill="#52b788" stroke="#2d6a4f" stroke-width="2.5"/>
+        <path d="M130 205 Q92 185 82 207 Q104 225 130 205 Z" fill="#74c69d" stroke="#2d6a4f" stroke-width="2.5"/>
+        <g transform="translate(130, 95)">
+          ${angles.map(ang => `
+            <path d="M0 -56 C20 -56, 25 -22, 0 0 C-25 -22, -20 -56, 0 -56 Z"
+                  fill="${d.paperColor}" stroke="#ffffff" stroke-width="2.5" transform="rotate(${ang})"/>
+          `).join('')}
+          <circle cx="0" cy="0" r="18" fill="${d.centerColor}" stroke="#f4a261" stroke-width="3"/>
+        </g>
+        ${d.stickers.map(st => `<text x="${st.x}" y="${st.y}" font-size="24" text-anchor="middle">${st.emoji}</text>`).join('')}
+        <text x="46" y="45" font-size="24">⭐</text>
+        <text x="214" y="45" font-size="24">⭐</text>
+      </svg>
+    `;
+    dockControls.innerHTML = `
+      <button class="action-btn btn-secondary" id="d4-replay">🔄 MAIN SEMULA</button>
+      <button class="action-btn btn-primary" id="d4-done">SETERUSNYA 🏠</button>
+    `;
+    document.getElementById('d4-replay').onclick = () => { sfx.playClick(); startDoor(4); };
+    document.getElementById('d4-done').onclick = () => { sfx.playClick(); goHome(); };
+  }
+}
+
+/* ==========================================================================
+   10. BOOTSTRAP APPLICATION ON LOAD
+   ========================================================================== */
+window.addEventListener('DOMContentLoaded', () => {
+  // Start BGM gently upon first user pointer interaction (browser autoplay policy)
+  document.body.addEventListener('pointerdown', () => sfx.init(), { once: true });
+  goHome();
+});
+</script>
+</body>
+</html>
